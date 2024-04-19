@@ -73,6 +73,7 @@
       echo '<li class="hideOnMobile dropdown">
           <a href="#" class="dropbtn"> <img src="../images/icons/Style=Solid.png" alt="User icon" width="15px">' . $Nom . '</a>
           <div class="dropdown-content">
+            <a href="../User_Compte/UserCompte.php"> <img src="../images/icons/Style=Solid (1).png" alt="Home icon icon" width="10px"> Compte</a>
             <a href="../Login/User/logout.php">Déconnexion</a>
           </div>
         </li>';
