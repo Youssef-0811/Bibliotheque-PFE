@@ -1,10 +1,26 @@
 <?php
-// Include database connection file
-include("../DataBase.php");
+// Start session
+session_start();
 
-// Retrieve documents with their status, content, and type
-$sql = "SELECT Id, Nom, Semestre, Filiere, Contenu, Type, Status FROM documents";
-$result = $conn->query($sql);
+// Check if the user is logged in
+if (!isset($_SESSION['user_id'])) {
+    // Redirect to login page or display an error message
+    header("Location: userLogin.php");
+    exit();
+}
+
+// Include database connection file
+include("../../DataBase.php");
+
+// Retrieve user ID from session
+$userID = $_SESSION['user_id'];
+
+// Retrieve documents inserted by the logged-in user
+$sql = "SELECT Id, Nom, Semestre, Filiere, Contenu, Type, Status FROM documents WHERE user_id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $userID);
+$stmt->execute();
+$result = $stmt->get_result();
 
 // Check if there are any documents
 if ($result->num_rows > 0) {

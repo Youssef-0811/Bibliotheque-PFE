@@ -1,6 +1,6 @@
 <?php
 // Include database connection file
-include("../DataBase.php");
+include("../../DataBase.php");
 
 // Check if the form is submitted
 if (isset($_POST["submit"])) {

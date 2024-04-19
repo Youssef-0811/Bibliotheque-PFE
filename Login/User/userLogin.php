@@ -1,144 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+include("../../DataBase.php");
+$userLoginError = "";
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Login</title>
-    <style>
-        /* Add your CSS styles here */
-        .error-message {
-            color: red;
-            font-size: 14px;
-            margin-top: 5px;
-        }
+// Check if form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Function to sanitize input data
+    function sanitizeInput($data)
+    {
+        global $conn;
+        $data = mysqli_real_escape_string($conn, $data);
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
 
+    // Retrieve username and password from form
+    $username = sanitizeInput($_POST["username"]);
+    $password = sanitizeInput($_POST["password"]);
 
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
+    // Check user credentials
+    $stmt = $conn->prepare("SELECT * FROM user WHERE Email = ?");
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $user = $result->fetch_assoc();
 
-        .container {
-            max-width: 400px;
-            margin: 50px auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        h2 {
-            margin-top: 0;
-            text-align: center;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            font-weight: bold;
-        }
-
-        input[type="text"],
-        input[type="password"],
-        input[type="email"],
-        select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-
-        input[type="submit"],
-        button {
-            width: 100%;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            background-color: #007bff;
-            color: #fff;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        input[type="submit"]:hover,
-        button:hover {
-            background-color: #0056b3;
-        }
-
-        .error-message {
-            color: red;
-            font-size: 14px;
-            margin-top: 5px;
-        }
-
-        .link-button {
-            display: block;
-            text-align: center;
-            margin-top: 10px;
-            color: #007bff;
-            text-decoration: none;
-        }
-    </style>
-</head>
-
-<body>
-    <div class="container">
-        <h2>User Login</h2>
-        <?php if (!empty($userLoginError)) echo '<div class="error-message">' . $userLoginError . '</div>'; ?>
-
-        <form action="userLogin.php" method="post">
-            <div class="form-group">
-                <label for="username">Username or Email</label>
-                <input type="text" id="username" name="username" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <input type="submit" value="Login">
-        </form>
-        <button onclick="location.href='../admin/Adminlogin.php'">Admin Login</button>
-        <button onclick="location.href='Register.php'">Register</button>
-        <button onclick="location.href='../../accueil.php'">Back to Homepage</button>
-    </div>
-
-    <?php
-    include("../../DataBase.php");
-    $adminLoginError = "";
-
-    // Check if form is submitted
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        // Function to sanitize input data
-        function sanitizeInput($data)
-        {
-            global $conn;
-            $data = mysqli_real_escape_string($conn, $data);
-            $data = trim($data);
-            $data = stripslashes($data);
-            $data = htmlspecialchars($data);
-            return $data;
-        }
-
-        // Retrieve username and password from form
-        $username = sanitizeInput($_POST["username"]);
-        $password = sanitizeInput($_POST["password"]);
-
-        // Check user credentials
-        $stmt = $conn->prepare("SELECT * FROM user WHERE (Nom = ? OR Email = ?)");
-        $stmt->bind_param("ss", $username, $username);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $user = $result->fetch_assoc();
-
+    if ($user) {
         // Verify password
-        if ($user && password_verify($password, $user['Password'])) {
+        if (password_verify($password, $user['Password'])) {
             // User login successful
             session_start();
             $_SESSION['user_id'] = $user['ID'];
@@ -146,11 +36,49 @@
             header("Location: ../../accueil.php");
             exit();
         } else {
-            // User login failed
-            $userLoginError = " Incorrecte";
+            // Password incorrect
+            $userLoginError = "Incorrect password";
         }
+    } else {
+        // User not found (both Nom and Email not matching)
+        $userLoginError = "User not found";
     }
-    ?>
+}
+?>
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100">
+    <div class="container mx-auto mt-10 p-6 bg-white rounded-lg shadow-md max-w-md">
+        <h2 class="text-2xl font-bold mb-4 text-center">User Login</h2>
+
+        <form action="userLogin.php" method="post">
+            <?php if (!empty($userLoginError)) echo '<div class="text-red-600 text-sm mt-1">' . $userLoginError . '</div>'; ?>
+
+            <div class="mb-4">
+                <label for="username" class="block font-semibold">Username or Email</label>
+                <input type="text" id="username" name="username" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+            </div>
+            <div class="mb-4">
+                <label for="password" class="block font-semibold">Password</label>
+                <input type="password" id="password" name="password" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+            </div>
+            <button type="submit" class="w-full mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg cursor-pointer hover:bg-blue-600">Login</button>
+        </form>
+        <p class="block mt-2 px-4 py-2 text-center"><a href="../admin/Adminlogin.php" class="text-blue-500 hover:underline">Admin Login</a></p>
+        <p class="block mt-2 px-4 py-2 text-center"><a href="Register.php" class="text-blue-500 hover:underline">Register</a></p>
+        <p class="block mt-2 px-4 py-2 text-center"><a href="../../accueil.php" class="text-blue-500 hover:underline">Back to Homepage</a></p>
+    </div>
+
 
 </body>
 
