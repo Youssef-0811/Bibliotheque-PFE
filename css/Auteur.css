@@ -1,0 +1,69 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .nav {
+    background-color: #ddd;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .nav a {
+    text-decoration: none;
+    font-size: 20px;
+    color: #000;
+  }
+  
+  .container {
+    display: flex;
+  }
+  
+  .left-side {
+    flex: 1;
+    padding: 10px;
+  }
+  
+  .head {
+    background-color: #eee;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .right-side {
+    flex: 2;
+    padding: 10px;
+  }
+  
+  .SubHead {
+    background-color: #ddd;
+    padding: 10px;
+    display: block;
+    text-align: center;
+    font-weight: bold;
+  }
+  
+  table {
+    border: 1px solid #ddd;
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  table th,
+  table td {
+    padding: 5px;
+  }
+  
+  form {
+    margin-bottom: 15px;
+  }
+  
+  .link {
+    background-color: #ddd;
+    padding: 10px;
+    display: block;
+    text-align: center;
+    text-decoration: none;
+  }
+  
