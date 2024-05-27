@@ -17,25 +17,100 @@
     <script src="jquery-3.7.1.min.js"></script>
     <!-- Custom styles for this template-->
     <link href="../../css/sb-admin-2.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
 
 </head>
 
+<style>
+    .triangle {
+        width: 35px;
+        /* Adjust as needed */
+        height: 35px;
+        /* Adjust as needed */
+        margin-right: 5px;
+        /* Adjust as needed */
+    }
+
+    .tooltip-text {
+        display: none;
+    }
+
+    .position-relative:hover .triangle {
+        display: inline;
+    }
+
+    .position-relative:hover .tooltip-text {
+        display: block;
+    }
+
+    .navbar-brand .sidebar-brand-text {
+        margin-right: 5px;
+    }
+
+    .dropdown-menu {
+        display: none;
+        position: absolute;
+        right: 0;
+        background-color: #fff;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        border-radius: 0.35rem;
+        padding: 0.5rem 0;
+    }
+
+    .nav-item.dropdown:hover .dropdown-menu {
+        display: block;
+    }
+
+    .navbar-nav.ml-auto .nav-item {
+        margin-left: 1rem;
+    }
+
+    .navbar-nav.ml-auto .nav-item:last-child {
+        margin-left: 0;
+    }
+
+    .img-profile {
+        width: 40px;
+        height: 40px;
+    }
+
+    .user-info {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    .user-info .username {
+        margin-right: 0.5rem;
+    }
+</style>
 
 
 <?php
 session_start(); // Start the session
-
+include("../../DataBase.php");
 // Check if admin is logged in, if not redirect to login page
 if (!isset($_SESSION['admin_id']) || empty($_SESSION['admin_id'])) {
     header("Location: ../../AdminLogin.php");
     exit();
 }
 
-// Retrieve admin's name and image URL from session variables
-$admin_name = $_SESSION['admin_name'];
-// Retrieve admin's image URL from session variable
-$admin_image_url = isset($_SESSION['admin_image']) ? $_SESSION['admin_image'] : "images\avatar icon.png"; // Provide a default image URL if admin image is not set
+// Fetch admin information from the database
+$query_admin_info = "SELECT * FROM admin WHERE Id = " . $_SESSION['admin_id'];
+$result_admin_info = mysqli_query($conn, $query_admin_info);
 
+if ($result_admin_info && mysqli_num_rows($result_admin_info) > 0) {
+    $admin_info = mysqli_fetch_assoc($result_admin_info);
+
+    // Retrieve admin's name and other details
+    $admin_name = $admin_info['Nom'] ?? '';
+    $image_data = $admin_info['Image'] ?? '';
+    $image_type = $admin_info['ImageType'] ?? '';
+} else {
+    // Handle error if unable to fetch admin information
+    $error = "Unable to fetch admin information";
+}
 ?>
 
 <body id="page-top">
@@ -47,7 +122,7 @@ $admin_image_url = isset($_SESSION['admin_image']) ? $_SESSION['admin_image'] : 
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="../AdminDash.php">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-book"></i>
                 </div>
@@ -78,7 +153,7 @@ $admin_image_url = isset($_SESSION['admin_image']) ? $_SESSION['admin_image'] : 
                     <i class="fas fa-fw fa-book"></i>
                     <span>Livres</span></a>
             </li>
-            <li class="nav-item ">
+            <li class="nav-item">
                 <a class="nav-link" href="../Documents/Documents.php">
                     <i class="fas fa-fw fa-book"></i>
                     <span>Documents</span></a>
@@ -89,14 +164,25 @@ $admin_image_url = isset($_SESSION['admin_image']) ? $_SESSION['admin_image'] : 
                     <span>Auteurs</span></a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="../User/User.php">
+                    <i class="fas fa-fw fa-user"></i>
+                    <span>User</span></a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="../Genres/Genre.php">
                     <i class="fas fa-fw fa-swatchbook"></i>
                     <span>Genres</span></a>
             </li>
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="../Format/Format.php">
                     <i class="fas fa-fw fa-align-left"></i>
                     <span>Formats</span></a>
+            </li>
+
+            <li class="nav-item active">
+                <a class="nav-link" href="../../Admin/ConfirmEmprunt/Comfirmemprunt.php">
+                    <i class="fas fa-fw fa-align-left"></i>
+                    <span>Confirm Emprunt</span></a>
             </li>
         </ul>
         <!-- End of Sidebar -->
@@ -122,17 +208,20 @@ $admin_image_url = isset($_SESSION['admin_image']) ? $_SESSION['admin_image'] : 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Nav Item - User Information -->
-                        <li class="nav-item dropdown no-arrow" style="margin-right: 10px;">
+                        <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-lg-inline text-gray-600 "><?php echo $admin_name; ?></span>
-                                <!-- <img class="img-profile rounded-circle" src="<?php echo $admin_image_url; ?>"> -->
+                                <div class="user-info">
+                                    <span class="username text-gray-600"><?= $admin_name; ?></span>
+                                    <img class="img-profile rounded-circle" src="data:<?php echo $image_type; ?>;base64,<?php echo base64_encode($image_data); ?>">
+                                </div>
                             </a>
+                            <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="../Deconexion.php">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Deconnexion
                                 </a>
-                                <a class="dropdown-item" href="../Deconexion.php">
+                                <a class="dropdown-item" href="../compte.php">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Compte
                                 </a>
@@ -160,15 +249,16 @@ $admin_image_url = isset($_SESSION['admin_image']) ? $_SESSION['admin_image'] : 
                                             <table class="table table-bordered dataTable" id="dataTable" role="grid" aria-describedby="dataTable_info" style="width: 100%;" width="100%" cellspacing="0">
                                                 <thead>
                                                     <tr role="row">
-                                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 275.45px;" aria-label="Position: activate to sort column ascending">id-client</th>
-                                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 275.45px;" aria-label="Position: activate to sort column ascending">id-emprunt</th>
-                                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 275.45px;" aria-label="Position: activate to sort column ascending">Titre du livre</th>
+                                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 275.45px;" aria-label="Position: activate to sort column ascending">Nom Prenom</th>
+                                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 275.45px;" aria-label="Position: activate to sort column ascending">Titre du Livre</th>
                                                         <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 275.45px;" aria-label="Position: activate to sort column ascending">date_d'emprunt</th>
                                                         <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 275.45px;" aria-label="Position: activate to sort column ascending">date de retour</th>
+                                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 275.45px;" aria-label="Position: activate to sort column ascending">Action</th>
+
                                                     </tr>
                                                 </thead>
                                                 <tbody id="formats">
-                                                <?php
+                                                    <?php
                                                     // Include the FetchA.php file to obtain authors' data
                                                     include("./FetchEmp.php");
                                                     ?>
@@ -182,7 +272,7 @@ $admin_image_url = isset($_SESSION['admin_image']) ? $_SESSION['admin_image'] : 
 
 
                     </div>
-                   
+
                     <!-- /.container-fluid -->
 
                 </div>
@@ -196,62 +286,81 @@ $admin_image_url = isset($_SESSION['admin_image']) ? $_SESSION['admin_image'] : 
 
 
 
-      <div class="container-fluid">
-                     <!-- Page Heading -->
-                        <div class="card border-left-primary shadow mb-4">
-                            <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">les client</h6>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered dataTable" id="dataTable" role="grid" aria-describedby="dataTable_info" style="width: 100%;" width="100%" cellspacing="0">
-                                        <thead>
-                                            <tr role="row">
-                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 125.45px;" aria-label="Position: activate to sort column ascending">Id_client</th>
-                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 125.45px;" aria-label="Position: activate to sort column ascending">Nom</th>
-                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 125.45px;" aria-label="Position: activate to sort column ascending">Prenom</th>
-                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 125.45px;" aria-label="Position: activate to sort column ascending">nombre de livre emprunter</th>
+            <div class="container-fluid">
+                <!-- Page Heading -->
+                <div class="card border-left-primary shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">les client</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered dataTable" id="dataTable" role="grid" aria-describedby="dataTable_info" style="width: 100%;" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr role="row">
+                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 125.45px;" aria-label="Position: activate to sort column ascending">Id_client</th>
+                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 125.45px;" aria-label="Position: activate to sort column ascending">Nom</th>
+                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 125.45px;" aria-label="Position: activate to sort column ascending">Prenom</th>
+                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 125.45px;" aria-label="Position: activate to sort column ascending">nombre de livre emprunter</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $sql = "SELECT DISTINCT user.Nom, user.ID, user.Prenom, emprunte_en_attente.id_client FROM user 
+        JOIN emprunte_en_attente 
+        ON user.ID = emprunte_en_attente.id_client";
+
+                                    $result = $conn->query($sql);
+
+                                    // Check if the query was successful
+                                    if ($result && $result->num_rows > 0) {
+                                        // Output data of each row
+                                        while ($row = $result->fetch_assoc()) {
+
+                                            $IDclient = $row['ID'];
+
+                                            $sqlc = "SELECT COUNT(empruntconfirme.id_client) AS total_rows  FROM empruntconfirme WHERE empruntconfirme.id_client= ? ";
+                                            $stmtc = $conn->prepare($sqlc);
+                                            $stmtc->bind_param('s', $IDclient);
+                                            $stmtc->execute();
+                                            $resultc = $stmtc->get_result();
+                                            $rowc = $resultc->fetch_assoc();
+                                            // Extract the count from the result
+                                            $rowCount = $rowc['total_rows'];
+
+                                            // Add the "danger" class if the number of borrowed books exceeds 4
+                                            $dangerClass = ($rowCount > 4) ? 'table-danger' : '';
+
+                                    ?>
+                                            <tr>
+                                                <td><?php echo $IDclient ?></td>
+                                                <td><?php echo $row['Nom']; ?></td>
+                                                <td><?php echo $row['Prenom']; ?></td>
+                                                <td class="position-relative">
+                                                    <?php if ($rowCount > 4) : ?>
+                                                        <div class="tooltip-text position-absolute top-100 start-0 translate-middle-x bg-danger px-1 py-2 rounded" style="bottom: 44px; color: #fff;">
+                                                            This user has more than 4 borrowed books
+                                                        </div>
+                                                        <img src="../../images/icons/Alert.png" class="triangle">
+                                                        <?php echo $rowCount; ?>
+                                                    <?php elseif ($rowCount > 0) : ?>
+                                                        <img src="../../images/icons/Alert.png" class="triangle" style="display: none;">
+                                                        <?php echo $rowCount; ?>
+                                                    <?php endif; ?>
+                                                </td>
                                             </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php
-                                            $sql = "SELECT DISTINCT user.Nom, user.ID,user.Prenom, emprunte_en_attente.id_client FROM user 
-                                            JOIN emprunte_en_attente 
-                                            ON user.ID = emprunte_en_attente.id_client";
-                             
-                                            $result = $conn->query($sql);
-                             
-                             // Check if the query was successful
-                             if ($result && $result->num_rows > 0) {
-                                 // Output data of each row
-                                 while ($row = $result->fetch_assoc()) {
 
-                                   $IDclient = $row['ID'];
+                                    <?php
+                                        }
+                                    }
+                                    ?>
 
-                                        $sqlc = "SELECT COUNT(empruntconfirme.id_client) AS total_rows  FROM empruntconfirme WHERE empruntconfirme.id_client= ? ";
-                                        $stmtc = $conn->prepare($sqlc);
-                                        $stmtc->bind_param('s',$IDclient);
-                                        $stmtc->execute();
-                                        $resultc = $stmtc->get_result();
-                                        $rowc = $resultc->fetch_assoc();
-                                           // Extract the count from the result
-                                        $rowCount = $rowc['total_rows'];
 
-                                          
-?>
-                                          <tr>
-                                               <td> <?php echo $IDclient ?></td>
-                                               <td> <?php  echo $row['Nom']; ?></td>
-                                               <td> <?php echo $row['Prenom'];  ?></td>
-                                               <td> <?php echo $rowCount; ?> </td>
-                                          </tr>
-                                        </tbody>
-                                        <?php }} ?>
-                                    </table>
-                                </div>
-                            </div>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
+                </div>
+            </div>
 
 
 
@@ -274,70 +383,70 @@ $admin_image_url = isset($_SESSION['admin_image']) ? $_SESSION['admin_image'] : 
             </div>
         </div>
 
-      
+
 
 
         <!-- Custom scripts for all pages-->
-       
+
         <script>
-function showDeleteModal(Idempr, id_client, Titre, date_emprunt, date_retour,NumeroLivre) {
-    var modal = document.getElementById('confirmModal');
-    var modalText = document.getElementById('confirmempModalText');
-    modalText.innerHTML = "Are you sure you want to confirm " + Titre + "?";
+            function confirmEmp(Idempr, id_client, Titre, date_emprunt, date_retour, NumeroLivre) {
+                var modal = document.getElementById('confirmModal');
+                var modalText = document.getElementById('confirmempModalText');
+                modalText.innerHTML = "Are you sure you want to confirm " + Titre + "?";
 
-    var confirmbutton = document.getElementById('confirmbutton');
-    var cancelconfirm = document.getElementById('cancelconfirm');
+                var confirmbutton = document.getElementById('confirmbutton');
+                var cancelconfirm = document.getElementById('cancelconfirm');
 
-    confirmbutton.onclick = function() {
-        // AJAX request to send data to the PHP script
-     // AJAX request to send data to the PHP script
-$.ajax({
-    type: "POST",
-    url: "Confirmemp.php",
-    dataType : "text",
-    data: {
-        EMPId: Idempr,
-        idclient: id_client,
-        Titre: Titre,
-        dateemp: date_emprunt,
-        dateR: date_retour,
-        NumL:NumeroLivre
-    },
-    success: function(response) {
-        // Handle the response from PHP
-        console.log(response);
-        // You can perform additional actions based on the response if needed
-          modal.style.display = "none"; // Hide the modal after successful submission
-          location.reload(); // Reload the page
-    },
-    error: function(xhr, status, error) {
-        // Handle AJAX errors
-        console.error("AJAX Error: " + error);
-    }
-});
+                confirmbutton.onclick = function() {
+                    // AJAX request to send data to the PHP script
+                    // AJAX request to send data to the PHP script
+                    $.ajax({
+                        type: "POST",
+                        url: "Confirmemp.php",
+                        dataType: "text",
+                        data: {
+                            EMPId: Idempr,
+                            idclient: id_client,
+                            Titre: Titre,
+                            dateemp: date_emprunt,
+                            dateR: date_retour,
+                            NumL: NumeroLivre
+                        },
+                        success: function(response) {
+                            // Handle the response from PHP
+                            console.log(response);
+                            // You can perform additional actions based on the response if needed
+                            modal.style.display = "none"; // Hide the modal after successful submission
+                            location.reload(); // Reload the page
+                        },
+                        error: function(xhr, status, error) {
+                            // Handle AJAX errors
+                            console.error("AJAX Error: " + error);
+                        }
+                    });
 
-       
-    }
 
-    cancelconfirm.onclick = function() {
-        modal.style.display = "none";
-    }
+                }
 
-    modal.style.display = "block";
+                cancelconfirm.onclick = function() {
+                    modal.style.display = "none";
+                }
 
-    var span = document.getElementsByClassName("close")[0];
+                modal.style.display = "block";
 
-    span.onclick = function() {
-        modal.style.display = "none";
-    }
+                var span = document.getElementsByClassName("close")[0];
 
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    }
-}
-</script>
+                span.onclick = function() {
+                    modal.style.display = "none";
+                }
+
+                window.onclick = function(event) {
+                    if (event.target == modal) {
+                        modal.style.display = "none";
+                    }
+                }
+            }
+        </script>
 
 
 

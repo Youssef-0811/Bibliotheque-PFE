@@ -23,24 +23,34 @@ if (isset($_SESSION['user_id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Compte</title>
+    <title>Documents</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Custom styles for responsiveness */
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+        }
+    </style>
 </head>
 
 <body class="font-sans bg-gray-100">
-    <!-- Header -->
-    <div class="bg-gray-900 text-white py-5 text-center text-3xl font-bold shadow" style="padding-bottom: 0px;">
-        User Compte
-    </div>
-
     <!-- Navbar -->
+    <div class="bg-gray-900 text-white py-5 text-center text-3xl font-bold shadow" style="padding-bottom: 0px;">
+        Edit Infos
+    </div>
     <nav class="bg-gray-900 text-white p-4" style="
     padding-bottom: 0px;
     padding-top: 0px;
 ">
         <div class="flex justify-between items-center">
             <div>
-                <h1 class="text-xl font-bold">User Compte</h1>
+                <h1 class="text-xl font-bold"></h1>
             </div>
             <div class="md:hidden">
                 <button id="mobile-menu-toggle" class="text-white focus:outline-none" style="padding-bottom: 0px;">
@@ -61,7 +71,7 @@ if (isset($_SESSION['user_id'])) {
     </div>
 
     <!-- Sidebar -->
-    <div class="hidden md:block bg-gray-900 text-white h-screen w-64 fixed top-0 left-0 pt-24 overflow-x-hidden" style="padding-top: 40px;">
+    <div class="sidebar md:block bg-gray-900 text-white h-screen w-64 fixed top-0 left-0 pt-24 overflow-x-hidden" style="padding-top: 40px;">
         <a href="#" class="block py-3 px-4 hover:bg-gray-700 flex items-center">
             <img src="../../images/icons/boy-front-color.png" alt="Documents Image" width="30px" class="mr-2">Edit Infos
         </a>

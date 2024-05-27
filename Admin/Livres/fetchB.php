@@ -62,7 +62,7 @@ if ($result && $result->num_rows > 0) {
         echo "<tr>";
         echo "<td><img src='" . $image . "' width='100'></td>";
         echo "<td>" . $row['Titre'] . "</td>";
-        echo "<td>" . $row['AuteurNom'] . "</td>";
+        echo "<td><a href='../Auteurs/Auteur.php?id=" . $row['Auteur_Id'] . "&redirected=true' class='author-link'>" . $row['AuteurNom'] . "</a></td>";
         echo "<td>" . $row['ISBN'] . "</td>";
         echo "<td>" . $row['Parution'] . "</td>";
         echo "<td style='white-space: nowrap;'>"; // Open table data for buttons

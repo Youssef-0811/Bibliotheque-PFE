@@ -35,7 +35,7 @@ if (isset($_POST["submit"])) {
     }
 
     // Check file size
-    if ($_FILES["file"]["size"] > 10000000) {
+    if ($_FILES["file"]["size"] > 100000000) {
         echo "Sorry, your file is too large.";
     }
     if ($type == "Unknown") {
@@ -56,7 +56,7 @@ if (isset($_POST["submit"])) {
         $stmt->send_long_data(4, $content);
 
         if ($stmt->execute()) {
-            header("Location:UserCompte.php");
+            header("Location:Documents.php");
         } else {
             echo "Error uploading document: " . $stmt->error;
         }

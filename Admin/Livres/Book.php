@@ -14,6 +14,7 @@
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="../../css/sb-admin-2.css" rel="stylesheet">
@@ -69,7 +70,7 @@ if ($result_admin_info && mysqli_num_rows($result_admin_info) > 0) {
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="../AdminDash.php">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-book"></i>
                 </div>
@@ -96,7 +97,7 @@ if ($result_admin_info && mysqli_num_rows($result_admin_info) > 0) {
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item active">
-                <a class="nav-link" href="../Livres/Book.php">
+                <a class="nav-link" href="#">
                     <i class="fas fa-fw fa-book"></i>
                     <span>Livres</span></a>
             </li>
@@ -109,6 +110,11 @@ if ($result_admin_info && mysqli_num_rows($result_admin_info) > 0) {
                 <a class="nav-link" href="../Auteurs/Auteur.php">
                     <i class="fas fa-fw fa-user"></i>
                     <span>Auteurs</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="../User/User.php">
+                    <i class="fas fa-fw fa-user"></i>
+                    <span>User</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="../Genres/Genre.php">
@@ -523,9 +529,6 @@ if ($result_admin_info && mysqli_num_rows($result_admin_info) > 0) {
     </div>
     <!-- End Edit Modal -->
 
-    <script>
-
-    </script>
 
 
 

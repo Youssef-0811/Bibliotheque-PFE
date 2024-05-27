@@ -14,12 +14,26 @@
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="../../css/sb-admin-2.css" rel="stylesheet">
+    <!-- Include jQuery library -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/6r6QF/QRTT13c94pjodroF9m3p2PLB9o4q1fOu/qlI=" crossorigin="anonymous"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 
 </head>
+<style>
+    .book-list {
+        max-height: 202px;
+        /* 3 books * 64px per book */
+        overflow-y: auto;
+    }
+
+    .highlight {
+        background-color: #f2f2f2;
+        /* Or any other color you prefer */
+    }
+</style>
 
 <?php
 session_start(); // Start the session
@@ -88,21 +102,6 @@ if ($result_admin_info && mysqli_num_rows($result_admin_info) > 0) {
         width: 80%;
         /* Could be more or less, depending on screen size */
     }
-
-    /* Close Button */
-    .close {
-        color: #aaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-    }
-
-    .close:hover,
-    .close:focus {
-        color: black;
-        text-decoration: none;
-        cursor: pointer;
-    }
 </style>
 
 <body id="page-top">
@@ -145,8 +144,8 @@ if ($result_admin_info && mysqli_num_rows($result_admin_info) > 0) {
                     <i class="fas fa-fw fa-book"></i>
                     <span>Livres</span></a>
             </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="#">
+            <li class="nav-item">
+                <a class="nav-link" href="../Documents/Documents.php">
                     <i class="fas fa-fw fa-book"></i>
                     <span>Documents</span></a>
             </li>
@@ -155,8 +154,8 @@ if ($result_admin_info && mysqli_num_rows($result_admin_info) > 0) {
                     <i class="fas fa-fw fa-user"></i>
                     <span>Auteurs</span></a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="../User/User.php">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">
                     <i class="fas fa-fw fa-user"></i>
                     <span>User</span></a>
             </li>
@@ -193,7 +192,7 @@ if ($result_admin_info && mysqli_num_rows($result_admin_info) > 0) {
                     <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
                             <div class="input-group-append">
-                                <h1 class="h3 text-gray-800">Documents</h1>
+                                <h1 class="h3 text-gray-800">Users</h1>
                             </div>
                         </div>
                     </form>
@@ -235,10 +234,10 @@ if ($result_admin_info && mysqli_num_rows($result_admin_info) > 0) {
                         <!-- Page Heading -->
                         <div class="card border-left-primary shadow mb-4">
                             <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">Les Documents disponibles</h6>
+                                <h6 class="m-0 font-weight-bold text-primary">Les Users</h6>
                             </div>
                             <div class="card-body">
-                                <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
+                                <div class="table-responsive" style="max-height: 220px; overflow-y: auto;">
                                     <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
 
                                         <div class="row">
@@ -246,16 +245,17 @@ if ($result_admin_info && mysqli_num_rows($result_admin_info) > 0) {
                                                 <table class="table table-bordered dataTable" id="dataTable" role="grid" aria-describedby="dataTable_info" style="width: 100%;" width="100%" cellspacing="0">
                                                     <thead>
                                                         <tr role="row">
-                                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 125.45px;" aria-label="Position: activate to sort column ascending">Titre</th>
-                                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 125.45px;" aria-label="Position: activate to sort column ascending">Ajouté par</th>
-                                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 125.45px;" aria-label="Position: activate to sort column ascending">Semestre</th>
+                                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 125.45px;" aria-label="Position: activate to sort column ascending">Nom Prenom</th>
+                                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 125.45px;" aria-label="Position: activate to sort column ascending">Date de Naissance</th>
                                                             <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 125.45px;" aria-label="Position: activate to sort column ascending">Filiere</th>
+                                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 125.45px;" aria-label="Position: activate to sort column ascending">Livres Emprunter</th>
                                                             <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 125.45px;" aria-label="Position: activate to sort column ascending">Actions</th>
+
                                                         </tr>
                                                     </thead>
                                                     <tbody id="documents">
                                                         <?php
-                                                        include("FetchD.php");
+                                                        include("FetchU.php");
                                                         ?>
                                                     </tbody>
                                                 </table>
@@ -270,14 +270,11 @@ if ($result_admin_info && mysqli_num_rows($result_admin_info) > 0) {
 
 
 
-                    <div class="card border-left-primary shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 id="titleForm" class="m-0 font-weight-bold text-primary">Contenue</h6>
-                        </div>
-                        <div class="card-body">
 
-                        </div>
+                    <div class="card-body2">
+
                     </div>
+
 
 
 
@@ -291,72 +288,214 @@ if ($result_admin_info && mysqli_num_rows($result_admin_info) > 0) {
         </div>
         <!-- End of Content Wrapper -->
 
-        <!-- Confirmation Modal -->
-        <div id="confirmationModal" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>Confirmation</h2>
-                <p id="confirmationMessage"></p>
-                <form id="confirmationForm" method="post" action="ConfirmD.php">
-                    <!-- Hidden inputs to store document ID and status -->
-                    <input type="hidden" id="document_id" name="document_id">
-                    <input type="hidden" id="document_status" name="document_status">
-                    <button type="submit" class="btn btn-primary">Confirm</button>
-                    <button type="button" id="cancelButton" class="btn btn-secondary">Cancel</button>
-
-                </form>
-            </div>
-        </div>
 
 
 
 
     </div>
-    <!-- End of Page Wrapper -->
 
-    <!-- Custom scripts for all pages-->
-    <script src="js/common.js"></script>
-    <script src="js/books.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/6r6QF/QRTT13c94pjodroF9m3p2PLB9o4q1fOu/qlI=" crossorigin="anonymous"></script>
+
+
+
+
+    <!-- Edit User Modal -->
+    <div id="editUserModal" class="modal">
+        <div class="modal-content" style="margin: 5% auto;">
+            <span class="close">&times;</span>
+            <h2>Edit User</h2>
+            <form id="editUserForm" action="editUser.php" method="post">
+                <!-- Hidden input for user ID -->
+                <input type="hidden" id="editUserId" name="editUserId">
+
+                <div class="form-group">
+                    <label for="editUserNom">Nom</label>
+                    <input type="text" class="form-control" id="editUserNom" name="editUserNom">
+                </div>
+                <div class="form-group">
+                    <label for="editUserPrenom">Prénom</label>
+                    <input type="text" class="form-control" id="editUserPrenom" name="editUserPrenom">
+                </div>
+                <div class="form-group">
+                    <label for="editUserEmail">Email</label>
+                    <input type="email" class="form-control" id="editUserEmail" name="editUserEmail">
+                </div>
+                <div class="form-group">
+                    <label for="editUserDateNaissance">Date de Naissance</label>
+                    <input type="date" class="form-control" id="editUserDateNaissance" name="editUserDateNaissance">
+                </div>
+                <div class="form-group">
+                    <label for="editUserFiliere">Filière</label>
+                    <input type="text" class="form-control" id="editUserFiliere" name="editUserFiliere">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+                <button type="button" class="btn btn-secondary" id="cancelEditUserButton">Cancel</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Delete User Modal -->
+    <div id="deleteUserModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Delete User</h2>
+            <p id="deleteUserConfirmation"></p>
+            <button id="confirmDeleteUserButton" class="btn btn-danger">Yes</button>
+            <button id="cancelDeleteUserButton" class="btn btn-secondary">Cancel</button>
+        </div>
+    </div>
 
     <script>
-        // Function to open the confirmation modal
-        function openConfirmationModal(id, name, status) {
-            var modal = document.getElementById('confirmationModal');
-            var form = document.getElementById('confirmationForm');
-            var message = document.getElementById('confirmationMessage');
+        // Function to open edit user modal
+        function openEditUserModal(userId, nom, prenom, email, dateNaissance, filiere) {
+            var modal = document.getElementById('editUserModal');
+            var form = document.getElementById('editUserForm');
 
             // Check if the modal and form elements exist
             if (modal && form) {
-                // Set modal message and form input values
-                message.textContent = "Are you sure you want to confirm " + name + "?";
-                document.getElementById('document_id').value = id;
-                document.getElementById('document_status').value = status;
+                // Set form values with user data
+                document.getElementById('editUserId').value = userId;
+                document.getElementById('editUserNom').value = nom;
+                document.getElementById('editUserPrenom').value = prenom;
+                document.getElementById('editUserEmail').value = email;
+                document.getElementById('editUserDateNaissance').value = dateNaissance;
+                document.getElementById('editUserFiliere').value = filiere;
 
                 modal.style.display = "block";
 
-                // Set event listener for the cancel button
-                var cancelButton = document.getElementById('cancelButton');
-                cancelButton.addEventListener('click', function() {
-                    modal.style.display = "none"; // Close the modal when cancel button is clicked
+                // Set up event listener for cancel button
+                var cancelEditUserButton = document.getElementById('cancelEditUserButton');
+                cancelEditUserButton.addEventListener('click', function() {
+                    modal.style.display = "none";
                 });
+
+                // Handle form submission
+                form.onsubmit = function(event) {
+                    event.preventDefault(); // Prevent default form submission
+                    // Submit the form data asynchronously
+                    var formData = new FormData(form);
+                    fetch('editUser.php', {
+                            method: 'POST',
+                            body: formData
+                        })
+                        .then(response => response.text())
+                        .then(data => {
+                            // Log server response
+                            console.log(data);
+                            // Check if the response contains the success message
+                            if (data.includes("User updated successfully")) {
+                                // Display a success message
+                                console.log('User updated successfully');
+                                // Close the modal
+                                modal.style.display = "none";
+                                // Reload the page only when the save operation is successful
+                                window.location.reload();
+                            } else {
+                                // Display an error message
+                                alert('Error updating user: ' + data);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error); // Log any errors
+                        });
+                };
             } else {
                 console.error("Modal or form element not found");
             }
         }
 
-        // Function to close the modal when clicked outside of it
-        window.onclick = function(event) {
-            var modal = document.getElementById('confirmationModal');
-            if (event.target == modal) {
+        // Function to open delete user modal
+        function openDeleteUserModal(userName) {
+            var modal = document.getElementById('deleteUserModal');
+            var deleteUserConfirmation = document.getElementById('deleteUserConfirmation');
+            deleteUserConfirmation.textContent = "Are you sure you want to delete " + userName + "?";
+
+            var confirmDeleteUserButton = document.getElementById('confirmDeleteUserButton');
+            var cancelDeleteUserButton = document.getElementById('cancelDeleteUserButton');
+
+            confirmDeleteUserButton.onclick = function() {
+                // Redirect to the delete script with user ID
+                window.location.href = "deleteUser.php?id=" + userId;
+            }
+
+            cancelDeleteUserButton.onclick = function() {
                 modal.style.display = "none";
             }
-        };
+
+            modal.style.display = "block";
+
+            // Set up event listener for close button
+            var closeButton = document.querySelector('.close');
+            closeButton.addEventListener('click', function() {
+                modal.style.display = "none";
+            });
+
+            // Click outside modal to close
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        }
     </script>
 
 
 
 
+
+
+
+    <!-- End of Page Wrapper -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            function highlightAndScrollToUser(userId) {
+                // Remove highlight from all rows
+                $('.highlight').removeClass('highlight');
+                // Highlight the selected user's row
+                const userRow = $('#user_' + userId);
+                userRow.addClass('highlight');
+                // Scroll to the selected user's row
+                if (userRow.length > 0) {
+                    $('#dataTable').animate({
+                        scrollTop: userRow.offset().top - $('#dataTable').offset().top + $('#dataTable').scrollTop()
+                    }, 500);
+                }
+                // Remove highlighting after 1 second
+                setTimeout(function() {
+                    userRow.removeClass('highlight');
+                }, 500);
+            }
+
+            // Fetch the user ID from the URL parameters and highlight the corresponding row
+            const urlParams = new URLSearchParams(window.location.search);
+            const userId = urlParams.get('id');
+            if (userId) {
+                highlightAndScrollToUser(userId);
+            }
+        });
+    </script>
+
+
+    <script>
+        function showBorrowedBooks(userId) {
+            $.ajax({
+                type: 'POST',
+                url: 'FetchU_Books.php',
+                data: {
+                    userId: userId
+                },
+                success: function(response) {
+                    // Display fetched books in the designated area
+                    $('.card-body2').html(response);
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
+        }
+    </script>
 
 </body>
 

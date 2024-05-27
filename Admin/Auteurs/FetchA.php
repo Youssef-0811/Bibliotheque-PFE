@@ -9,8 +9,9 @@ $result = $conn->query($sql);
 if ($result && $result->num_rows > 0) {
     // Output data of each row
     while ($row = $result->fetch_assoc()) {
-        echo "<tr>";
-        echo "<td><img src='data:" . $row['ImageType'] . ";base64," . base64_encode($row['Image']) . "' width='100'></td>";
+        echo "<tr data-author-id='" . $row['Id'] . "'>"; // Add data-author-id attribute to the row
+        echo "<input type='hidden' class='author-id' value='" . $row['Id'] . "'>"; // Hidden input for author ID
+        echo "<td><img src='data:" . $row['ImageType'] . ";base64," . base64_encode($row['Image']) . "' style='max-width: 75px; min-width: 75px; max-height: 75px; min-height: 75px; object-fit: cover;' /></td>";
         echo "<td>" . $row['Prenom'] . "</td>";
         echo "<td>" . $row['Nom'] . "</td>";
         // Display a limited number of lines for the biography
@@ -26,30 +27,4 @@ if ($result && $result->num_rows > 0) {
     }
 }
 
-// Function to truncate the text to two lines and provide "Read More" / "See Less" link        truncate_text(          , 200) .
-// function truncate_text($text)
-// {
-//     // Truncate the text to two lines
-//     $truncated_text = '';
-//     $lines = explode("\n", $text);
-//     for ($i = 0; $i < 2; $i++) {
-//         if (isset($lines[$i])) {
-//             $truncated_text .= $lines[$i] . "<br>";
-//         }
-//     }
-
-//     // Check if there are more than two lines
-//     if (count($lines) > 2) {
-//         // Add "Read More" link to the truncated text
-//         $truncated_text .= '<a href="#" class="read-more">Read More</a>';
-//     }
-
-//     // Store the full text in a data attribute
-//     $full_text = htmlspecialchars($text);
-//     $truncated_text = htmlspecialchars($truncated_text);
-
-//     // Return the truncated text with "Read More" link
-//     return "<div class='biography' data-full-text='$full_text' data-truncated-text='$truncated_text'>$truncated_text</div>";
-// }
-// Fermer la connexion à la base de données si elle n'est plus nécessaire
 $conn->close();

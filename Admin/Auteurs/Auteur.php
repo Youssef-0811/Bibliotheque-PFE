@@ -14,6 +14,7 @@
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="../../css/sb-admin-2.css" rel="stylesheet">
@@ -28,6 +29,11 @@
     /* CSS to show the dropdown when hovering over the admin's name or image */
     .nav-item.dropdown:hover .dropdown-menu {
         display: block;
+    }
+
+    .highlight {
+        background-color: #f2f2f2;
+        /* Or any other color you prefer */
     }
 </style>
 <?php
@@ -61,12 +67,11 @@ if ($result_admin_info && mysqli_num_rows($result_admin_info) > 0) {
 
     <!-- Page Wrapper -->
     <div id="wrapper">
-
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="../AdminDash.php">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-book"></i>
                 </div>
@@ -97,15 +102,20 @@ if ($result_admin_info && mysqli_num_rows($result_admin_info) > 0) {
                     <i class="fas fa-fw fa-book"></i>
                     <span>Livres</span></a>
             </li>
-            <li class="nav-item ">
+            <li class="nav-item">
                 <a class="nav-link" href="../Documents/Documents.php">
                     <i class="fas fa-fw fa-book"></i>
                     <span>Documents</span></a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="../Auteurs/Auteur.php">
+                <a class="nav-link" href="#">
                     <i class="fas fa-fw fa-user"></i>
                     <span>Auteurs</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="../User/User.php">
+                    <i class="fas fa-fw fa-user"></i>
+                    <span>User</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="../Genres/Genre.php">
@@ -117,6 +127,7 @@ if ($result_admin_info && mysqli_num_rows($result_admin_info) > 0) {
                     <i class="fas fa-fw fa-align-left"></i>
                     <span>Formats</span></a>
             </li>
+
             <li class="nav-item">
                 <a class="nav-link" href="../../Admin/ConfirmEmprunt/Comfirmemprunt.php">
                     <i class="fas fa-fw fa-align-left"></i>
@@ -213,29 +224,6 @@ if ($result_admin_info && mysqli_num_rows($result_admin_info) > 0) {
 
                 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-                <!-- Script for "Read More" functionality -->
-                <!-- <script>
-                    $(document).ready(function() {
-                        $('.biography').each(function() {
-                            var content = $(this).html();
-                            var lines = content.split('<br>'); // Split content by line breaks
-                            if (lines.length > 2) {
-                                var truncatedContent = lines.slice(0, 2).join('<br>'); // Take first two lines
-                                var remainingContent = lines.slice(2).join('<br>'); // Take remaining lines
-                                var html = truncatedContent + ' <a href="#" class="read-more">Read More</a>';
-                                $(this).html(html);
-                                $(this).data('remaining-content', remainingContent); // Store remaining content
-                            }
-                        });
-
-                        // Handle "Read More" click event
-                        $('.biography').on('click', '.read-more', function(e) {
-                            e.preventDefault(); // Prevent default link behavior
-                            var remainingContent = $(this).parent().data('remaining-content');
-                            $(this).parent().html(remainingContent); // Display full biography
-                        });
-                    });
-                </script> -->
 
 
 
@@ -296,7 +284,6 @@ if ($result_admin_info && mysqli_num_rows($result_admin_info) > 0) {
     <!-- End of Page Wrapper -->
 
     <!-- Delete Modal -->
-    <!-- Delete Modal -->
     <div id="deleteModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
@@ -313,6 +300,44 @@ if ($result_admin_info && mysqli_num_rows($result_admin_info) > 0) {
     <!-- Custom scripts for all pages-->
     <script src="js/common.js"></script>
     <script src="js/authors.js"></script>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const authorId = urlParams.get('id');
+            const redirected = urlParams.get('redirected'); // Check if redirected from another page
+            if (authorId && redirected) {
+                highlightAuthor(authorId);
+                setTimeout(function() {
+                    scrollToAuthor(authorId);
+                }, 200);
+            }
+        });
+
+        function highlightAuthor(authorId) {
+            const authorRow = document.querySelector('tr[data-author-id="' + authorId + '"]');
+            if (authorRow) {
+                authorRow.classList.add('highlight');
+                setTimeout(function() {
+                    authorRow.classList.remove('highlight');
+                }, 700);
+
+            }
+        }
+
+        function scrollToAuthor(authorId) {
+            const authorRow = document.querySelector('tr[data-author-id="' + authorId + '"]');
+            if (authorRow) {
+                const tableContainer = document.querySelector('.scrollable-table');
+                if (tableContainer) {
+                    tableContainer.scrollTop = authorRow.offsetTop - tableContainer.offsetTop;
+                }
+            }
+        }
+    </script>
+
+
     <script>
         function showDeleteModal(authorId, authorName) {
             var modal = document.getElementById('deleteModal');
@@ -346,6 +371,11 @@ if ($result_admin_info && mysqli_num_rows($result_admin_info) > 0) {
             }
         }
     </script>
+
+
+
+
+
     <script>
         // Function to open edit modal
         function openEditModal(authorId, nom, prenom, dateNaissance, bio, imageUrl) {
@@ -464,7 +494,6 @@ if ($result_admin_info && mysqli_num_rows($result_admin_info) > 0) {
             </form>
         </div>
     </div>
-
 
 
 

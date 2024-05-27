@@ -11,6 +11,11 @@
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-F8R+K9HZu1uZQz+aBXF7pSm+LW/5G3hWrYCTnqdV6cjfs7g2j1xrvhVpiQrYzJ2n" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-F8R+K9HZu1uZQz+aBXF7pSm+LW/5G3hWrYCTnqdV6cjfs7g2j1xrvhVpiQrYzJ2n" crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
     <!-- Custom styles for this template-->
     <link href="../css/sb-admin-2.css" rel="stylesheet">
 
@@ -94,20 +99,8 @@
     $row_total_books = mysqli_fetch_assoc($result_total_books);
     $total_books = $row_total_books['total_books'];
 
-    // Evolution of books added over time (Monthly)
-    $query_books_added_evolution = "SELECT DATE_FORMAT(Parution, '%Y-%m') AS month_year, COUNT(*) AS books_added 
-                                FROM livres 
-                                GROUP BY DATE_FORMAT(Parution, '%Y-%m')";
-    $result_books_added_evolution = mysqli_query($conn, $query_books_added_evolution);
 
-    // Fetching data for the chart
-    $chart_labels = [];
-    $chart_data = [];
 
-    while ($row = mysqli_fetch_assoc($result_books_added_evolution)) {
-        $chart_labels[] = $row['month_year'];
-        $chart_data[] = $row['books_added'];
-    }
 
     // Number of books borrowed
     $query_books_borrowed = "SELECT COUNT(*) AS books_borrowed FROM empruntconfirme";
@@ -116,12 +109,13 @@
     $books_borrowed = $row_books_borrowed['books_borrowed'];
 
     // Top users who borrowed the most books
-    $query_top_users = "SELECT u.Nom, u.Prenom, COUNT(le.numero_livre_emprunter) AS books_borrowed_count
-                    FROM user u
-                    JOIN empruntconfirme le ON u.ID = le.id_client
-                    GROUP BY u.ID
-                    ORDER BY books_borrowed_count DESC
-                    LIMIT 3";
+    $query_top_users = "SELECT u.ID AS user_id, u.Nom, u.Prenom, COUNT(le.numero_livre_emprunter) AS books_borrowed_count
+    FROM user u
+    JOIN empruntconfirme le ON u.ID = le.id_client
+    GROUP BY u.ID
+    ORDER BY books_borrowed_count DESC
+    LIMIT 3
+    ";
     $result_top_users = mysqli_query($conn, $query_top_users);
 
     // Top three genres
@@ -156,13 +150,37 @@
     $least_borrowed_format = $row_least_borrowed_format['format'];
 
     // Most popular authors
-    $query_most_popular_authors = "SELECT a.Nom AS author_name, COUNT(l.Numero) AS books_count
-                                FROM auteurs a
-                                JOIN livres l ON a.ID = l.Auteur_Id
-                                GROUP BY a.ID
-                                ORDER BY books_count DESC
-                                LIMIT 3";
+    $query_most_popular_authors = "SELECT a.ID AS author_id, a.Nom AS author_name, COUNT(l.Numero) AS books_count
+    FROM auteurs a
+    JOIN livres l ON a.ID = l.Auteur_Id
+    GROUP BY a.ID
+    ORDER BY books_count DESC
+    LIMIT 3
+    ";
     $result_most_popular_authors = mysqli_query($conn, $query_most_popular_authors);
+
+    // Number of documents added
+    $query_total_documents = "SELECT COUNT(*) AS total_documents FROM documents";
+    $result_total_documents = mysqli_query($conn, $query_total_documents);
+    $row_total_documents = mysqli_fetch_assoc($result_total_documents);
+    $total_documents = $row_total_documents['total_documents'];
+
+    // Top three users who added documents
+    $query_top_document_users = "SELECT u.ID AS user_id, u.Nom, u.Prenom, COUNT(d.Id) AS documents_added_count
+    FROM user u
+    JOIN documents d ON u.ID = d.Id_User
+    GROUP BY u.ID
+    ORDER BY documents_added_count DESC
+    LIMIT 3
+    ";
+    $result_top_document_users = mysqli_query($conn, $query_top_document_users);
+
+    // Average rating of books
+    $query_average_book_rating = "SELECT AVG(rating) AS average_rating FROM book_review";
+    $result_average_book_rating = mysqli_query($conn, $query_average_book_rating);
+    $row_average_book_rating = mysqli_fetch_assoc($result_average_book_rating);
+    $average_book_rating = $row_average_book_rating['average_rating'];
+
 
     // Close database connection
     mysqli_close($conn);
@@ -223,51 +241,74 @@
 
 <body id="page-top">
     <div id="wrapper">
-        <!-- Sidebar -->
+
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="AdminDash.php">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-book"></i>
                 </div>
-                <div class="sidebar-brand-text mx-1">Webook</div>
+                <div class="sidebar-brand-text mx-3">Webook</div>
             </a>
+
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
+
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="../Admin/AdminDash.php">
+                <a class="nav-link" href="#">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Tableau de bord</span></a>
             </li>
+
             <!-- Divider -->
             <hr class="sidebar-divider">
+
             <!-- Heading -->
             <div class="sidebar-heading">
                 Gestion
             </div>
+
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link" href="../Admin/Livres/Book.php">
+            <li class="nav-item ">
+                <a class="nav-link" href="Livres/Book.php">
                     <i class="fas fa-fw fa-book"></i>
                     <span>Livres</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="../Admin/Auteurs/Auteur.php">
+                <a class="nav-link" href="Documents/Documents.php">
+                    <i class="fas fa-fw fa-book"></i>
+                    <span>Documents</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="Auteurs/Auteur.php">
                     <i class="fas fa-fw fa-user"></i>
                     <span>Auteurs</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="../Admin/Genres/Genre.php">
+                <a class="nav-link" href="User/User.php">
+                    <i class="fas fa-fw fa-user"></i>
+                    <span>User</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="Genres/Genre.php">
                     <i class="fas fa-fw fa-swatchbook"></i>
                     <span>Genres</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="../Admin/Format/Format.php">
+                <a class="nav-link" href="Format/Format.php">
                     <i class="fas fa-fw fa-align-left"></i>
                     <span>Formats</span></a>
             </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="ConfirmEmprunt/Comfirmemprunt.php">
+                    <i class="fas fa-fw fa-align-left"></i>
+                    <span>Confirm Emprunt</span></a>
+            </li>
         </ul>
+        <!-- End of Sidebar -->
         <!-- End of Sidebar -->
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
@@ -320,19 +361,89 @@
                         </div>
                     </div>
 
-                    <!-- Evolution of books added over time -->
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Evolution of Books Added Over Time</h6>
-                                </div>
-                                <div class="card-body">
-                                    <canvas id="booksAddedChart"></canvas>
+                    <!-- Number of documents added -->
+                    <div class="col-lg-6 mb-4">
+                        <div class="card border-left-info shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Total Number of Documents</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $total_documents ?></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Top users who added the most documents -->
+                    <div class="col-lg-6 mb-4">
+                        <div class="card border-left-warning shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Top Users Who Added the Most Documents</div>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Number of Documents Added</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php while ($row = mysqli_fetch_assoc($result_top_document_users)) { ?>
+                                                <tr>
+                                                    <td><a href="User/User.php?id=<?= $row['user_id'] ?>"><?= $row['Nom'] . ' ' . $row['Prenom'] ?></a></td>
+                                                    <td><?= $row['documents_added_count'] ?></td>
+                                                </tr>
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+
+                    <!-- Average rating of books -->
+                    <div class="col-lg-12 mb-4">
+                        <div class="card border-left-secondary shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">Average Rating of Books</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    <?php
+                                    // Calculate the number of full stars
+                                    $full_stars = floor($average_book_rating);
+
+                                    // Calculate the number of half stars
+                                    $half_star = $average_book_rating - $full_stars;
+
+                                    // Display full stars
+                                    for ($i = 0; $i < $full_stars; $i++) {
+                                        echo '<i class="fas fa-star text-warning"></i>';
+                                    }
+
+                                    // Display half star (if any)
+                                    if ($half_star > 0) {
+                                        echo '<i class="fas fa-star-half-alt text-warning" style="width: 0.5em;"></i>';
+                                    }
+
+                                    // Calculate the number of empty stars
+                                    $empty_stars = 5 - ceil($average_book_rating);
+
+                                    // Display empty stars
+                                    for ($i = 0; $i < $empty_stars; $i++) {
+                                        echo '<i class="far fa-star text-secondary"></i>';
+                                    }
+
+                                    // Output the rating value
+                                    echo "&nbsp;&nbsp;" . " $average_book_rating";
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
 
                     <!-- Top users who borrowed the most books -->
                     <div class="row">
@@ -353,7 +464,7 @@
                                             <tbody>
                                                 <?php while ($row = mysqli_fetch_assoc($result_top_users)) { ?>
                                                     <tr>
-                                                        <td><?= $row['Nom'] . ' ' . $row['Prenom'] ?></td>
+                                                        <td><a href="User/User.php?id=<?= $row['user_id'] ?>"><?= $row['Nom'] . ' ' . $row['Prenom'] ?></a></td>
                                                         <td><?= $row['books_borrowed_count'] ?></td>
                                                     </tr>
                                                 <?php } ?>
@@ -364,6 +475,7 @@
                             </div>
                         </div>
                     </div>
+
 
                     <!-- Top three genres and Most and least borrowed formats -->
                     <div class="row">
@@ -416,7 +528,7 @@
                                     <ul class="list-group">
                                         <?php while ($row = mysqli_fetch_assoc($result_most_popular_authors)) { ?>
                                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                <?= $row['author_name'] ?>
+                                                <a href="Auteurs/Auteur.php?id=<?= $row['author_id'] ?>&redirected=true" class="author-link"><?= $row['author_name'] ?></a>
                                                 <span class="badge badge-primary badge-pill"><?= $row['books_count'] ?></span>
                                             </li>
                                         <?php } ?>

@@ -1,201 +1,295 @@
-<?php
-include('DataBase.php');
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
 
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submitLiv'])) {
+  <title>user about me section - Bootdey.com</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="header-footer2.css">
+  <style type="text/css">
+    body {
+      margin-top: 20px;
+    }
+
+    .card-style1 {
+      box-shadow: 0px 0px 10px 0px rgb(89 75 128 / 9%);
+    }
+
+    .border-0 {
+      border: 0 !important;
+    }
+
+    .card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      word-wrap: break-word;
+      background-color: #fff;
+      background-clip: border-box;
+      border: 1px solid rgba(0, 0, 0, .125);
+      border-radius: 0.25rem;
+    }
+
+    section {
+      padding: 120px 0;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .mb-2-3,
+    .my-2-3 {
+      margin-bottom: 2.3rem;
+    }
+
+    .section-title {
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      position: relative;
+      display: inline-block;
+    }
+
+    .text-primary {
+      color: #ceaa4d !important;
+    }
+
+    .text-secondary {
+      color: #15395A !important;
+    }
+
+    .font-weight-600 {
+      font-weight: 600;
+    }
+
+    .display-26 {
+      font-size: 1.3rem;
+    }
+
+    @media screen and (min-width: 992px) {
+      .p-lg-7 {
+        padding: 4rem;
+      }
+    }
+
+    @media screen and (min-width: 768px) {
+      .p-md-6 {
+        padding: 3.5rem;
+      }
+    }
+
+    @media screen and (min-width: 576px) {
+      .p-sm-2-3 {
+        padding: 2.3rem;
+      }
+    }
+
+    .p-1-9 {
+      padding: 1.9rem;
+    }
+
+    .bg-secondary {
+      background: #15395A !important;
+    }
+
+    @media screen and (min-width: 576px) {
+
+      .pe-sm-6,
+      .px-sm-6 {
+        padding-right: 3.5rem;
+      }
+    }
+
+    @media screen and (min-width: 576px) {
+
+      .ps-sm-6,
+      .px-sm-6 {
+        padding-left: 3.5rem;
+      }
+    }
+
+    .pe-1-9,
+    .px-1-9 {
+      padding-right: 1.9rem;
+    }
+
+    .ps-1-9,
+    .px-1-9 {
+      padding-left: 1.9rem;
+    }
+
+    .pb-1-9,
+    .py-1-9 {
+      padding-bottom: 1.9rem;
+    }
+
+    .pt-1-9,
+    .py-1-9 {
+      padding-top: 1.9rem;
+    }
+
+    .mb-1-9,
+    .my-1-9 {
+      margin-bottom: 1.9rem;
+    }
+
+    @media (min-width: 992px) {
+      .d-lg-inline-block {
+        display: inline-block !important;
+      }
+    }
+
+    .rounded {
+      border-radius: 0.25rem !important;
+      width: 20rem;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <?php
+
+    include('HF/Header2.php');
+    include('DataBase.php');
+    ?>
+  </header>
+  <?php
+  if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submitLiv'])) {
 
 
     $id_livre = mysqli_real_escape_string($conn, $_POST['id-livre']);
 
 
-$sql = "SELECT * FROM livres WHERE Numero = $id_livre ";
+    $sql = "SELECT * FROM livres WHERE Numero = $id_livre ";
 
-$result = mysqli_query($conn,$sql);
+    $result = mysqli_query($conn, $sql);
 
-$ligne = mysqli_fetch_assoc($result);
-}
-?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="header-footer2.css">
-    <title>Document</title>
-</head>
-<header>
-<?php
-include('HF/header2.php');
+    $ligne = mysqli_fetch_assoc($result);
 
-?>
-</header>
-<body>
-
-<style>
-
-body{
-  font-family: Noto Sans, sans-serif;
-}
-
-.main{
-margin: 0 80px;
-}
-
-.card {
-  position: relative;
-  margin-top: 10rem;
-}
-
-.card img {
-  border-radius: 10px;
-  width: 450px;
-  height: 600px;
-  fill: #333;
-  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  box-shadow: 0 0 15px rgb(76, 44, 0);
-}
-
-
-
-
-
-.emprunt{
-    right: 5rem;
-    position: absolute;
-    top: 10rem;
-    float: left;
-    width: 50%;
-
-}
-.emprunt h1{
-font-size: 70px;
-
-}
-
-.main #submit{
-margin-top: 1rem;
-width: 20rem;
- align-items: center;
- appearance: none;
- background-color: rgb(76, 44, 0);
- border-radius: 35px;
- border-width: 0;
- box-shadow: rgba(45, 35, 66, 0.2) 0 2px 4px,rgba(45, 35, 66, 0.15) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset;
- box-sizing: border-box;
- color: white;
- cursor: pointer;
- display: inline-flex;
- font-family: "JetBrains Mono",monospace;
- height: 48px;
- justify-content: center;
- line-height: 1;
- list-style: none;
- overflow: hidden;
- padding-left: 10px;
- padding-right: 10px;
- position: relative;
- text-align: left;
- text-decoration: none;
- transition: box-shadow .15s,transform .15s;
- user-select: none;
- -webkit-user-select: none;
- touch-action: manipulation;
- white-space: nowrap;
- will-change: box-shadow,transform;
- font-size: 15px;
-}
-
-.main #submit:focus {
- box-shadow: #D6D6E7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
-}
-
-.main #submit:hover {
- box-shadow: rgba(45, 35, 66, 0.3) 0 4px 8px, rgba(45, 35, 66, 0.2) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
- transform: translateY(-2px);
-}
-
-.main #submit:active {
- box-shadow: #D6D6E7 0 3px 7px inset;
- transform: translateY(2px);
-}
-
-
-#Etat,#DateR{
-font-size: 35px;
-  margin-top: 3rem;
-}
-.details{
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-  border-radius: 10px;
-}
-.details .cont{
-margin-left: 30px;
-
-}
-.details .cont .roz{
-  display: grid;
-    grid-template-columns: 1fr 1fr;
-    margin-top: 2rem;
-    align-items: center;
-    grid-template-columns: 10rem max-content;
-  }
-  .cont h2{
-    padding-top: 0.5rem;
+    $sqlaut = "SELECT auteurs.Nom FROM auteurs JOIN livres ON auteurs.Id = livres.Auteur_Id WHERE livres.Numero = $id_livre ";
+    $resultaut =  mysqli_query($conn, $sqlaut);
+    $ligneaut = mysqli_fetch_assoc($resultaut);
   }
 
-</style>
+  ?>
+  <section class="bg-light">
+    <div class="container">
+      <?php if ($result && mysqli_num_rows($result) > 0) { ?>
+        <div class="row">
+          <div class="col-lg-12 mb-4 mb-sm-5">
+            <div class="card card-style1 border-0">
+              <div class="card-body p-1-9 p-sm-2-3 p-md-6 p-lg-7">
+                <div class="row align-items-center">
+                  <div class="col-lg-6 mb-4 mb-lg-0">
+                    <img src="data:image/jpeg;base64,<?php echo base64_encode($ligne['Image']); ?>">
+                  </div>
+                  <div class="col-lg-6 px-xl-10">
+                    <div class="bg-secondary d-lg-inline-block py-1-9 px-1-9 px-sm-6 mb-1-9 rounded">
 
+                      <?php if ($result && mysqli_num_rows($resultaut) > 0) {
+                        $Auteur = $ligneaut['Nom']; ?>
+                        <label for="nomauteur"><b>Nom d'auteur:</b></label>
+                        <h3 class="h2 text-white mb-0"><?php echo $Auteur; ?> </h3>
+                      <?php } ?>
+                      <span class="text-primary">Auteur</span>
+                    </div>
+                    <ul class="list-unstyled mb-1-9">
+                      <li class="mb-2 mb-xl-3 display-28"><span class="display-26 text-secondary me-2 font-weight-600">Nom du livre:</span><?php echo $ligne['Titre']; ?></li>
+                      <li class="mb-2 mb-xl-3 display-28"><span class="display-26 text-secondary me-2 font-weight-600">Etat:</span> Disponible</li>
+                      <li class="mb-2 mb-xl-3 display-28"><span class="display-26 text-secondary me-2 font-weight-600">Categorie</span> <?php echo $ligne['Titre']; ?></li>
 
-<div class="main">
-  
-<?php if ($result && mysqli_num_rows($result) > 0) {?>
+                      <form action="Empr.php" method="post">
 
-    <div class="card">
-  <img src="data:image/jpeg;base64,<?php echo base64_encode($ligne['Image']); ?>">
+                        <input type="hidden" name="titredelivre" value="<?php echo $ligne['Titre']; ?>">
+                        <input type="hidden" name="numerodelivre" value="<?php echo $ligne['Numero']; ?>">
 
+                        <input class="button" id="submit" type="submit" value="Emprunter" name="submit">
+
+                      </form>
+                    </ul>
+                  <?php } ?>
+                  <ul class="social-icon-style1 list-unstyled mb-0 ps-0">
+                    <li><a href="#!"><i class="ti-twitter-alt"></i></a></li>
+                    <li><a href="#!"><i class="ti-facebook"></i></a></li>
+                    <li><a href="#!"><i class="ti-pinterest"></i></a></li>
+                    <li><a href="#!"><i class="ti-instagram"></i></a></li>
+                  </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-12 mb-4 mb-sm-5">
+            <div>
+              <span class="section-title text-primary mb-3 mb-sm-4">Resume</span>
+              <p>Edith is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+              <p class="mb-0">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed.</p>
+            </div>
+          </div>
+          <div class="col-lg-12">
+            <div class="row">
+              <div class="col-lg-12 mb-4 mb-sm-5">
+                <div class="mb-4 mb-sm-5">
+                  <span class="section-title text-primary mb-3 mb-sm-4">Skill</span>
+                  <div class="progress-text">
+                    <div class="row">
+                      <div class="col-6">Driving range</div>
+                      <div class="col-6 text-end">80%</div>
+                    </div>
+                  </div>
+                  <div class="custom-progress progress progress-medium mb-3" style="height: 4px;">
+                    <div class="animated custom-bar progress-bar slideInLeft bg-secondary" style="width:80%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="10" role="progressbar"></div>
+                  </div>
+                  <div class="progress-text">
+                    <div class="row">
+                      <div class="col-6">Short Game</div>
+                      <div class="col-6 text-end">90%</div>
+                    </div>
+                  </div>
+                  <div class="custom-progress progress progress-medium mb-3" style="height: 4px;">
+                    <div class="animated custom-bar progress-bar slideInLeft bg-secondary" style="width:90%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="70" role="progressbar"></div>
+                  </div>
+                  <div class="progress-text">
+                    <div class="row">
+                      <div class="col-6">Side Bets</div>
+                      <div class="col-6 text-end">50%</div>
+                    </div>
+                  </div>
+                  <div class="custom-progress progress progress-medium mb-3" style="height: 4px;">
+                    <div class="animated custom-bar progress-bar slideInLeft bg-secondary" style="width:50%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="70" role="progressbar"></div>
+                  </div>
+                  <div class="progress-text">
+                    <div class="row">
+                      <div class="col-6">Putting</div>
+                      <div class="col-6 text-end">60%</div>
+                    </div>
+                  </div>
+                  <div class="custom-progress progress progress-medium" style="height: 4px;">
+                    <div class="animated custom-bar progress-bar slideInLeft bg-secondary" style="width:60%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="70" role="progressbar"></div>
+                  </div>
+                </div>
+                <div>
+                  <span class="section-title text-primary mb-3 mb-sm-4">Education</span>
+                  <p>Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.</p>
+                  <p class="mb-1-9">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
     </div>
+  </section>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+  <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script type="text/javascript">
 
-
-
-<div class="emprunt">
-     <h1><?php echo $ligne['Titre'];?></h1><br>
-    <h3>Resume</h3>
-    <p>Dans un coin paisible de la ville, se trouve un lieu enchanté où les mots prennent vie et les esprits s'évadent : la <b>Bibliothèque ONLINE</b>. Au cœur de cette oasis littéraire, un service d'emprunt de livres vous attend, ouvert à tous les avides de découvertes et de voyages au-delà des pages.
-
-Plongez dans un monde de possibilités infinies où chaque rayonnage recèle des trésors à découvrir. Notre système d'emprunt simple et convivial vous permet de choisir parmi une vaste sélection d'œuvres, des classiques intemporels aux nouveautés palpitantes.
-
-Comment ça fonctionne ? C'est facile ! Il vous suffit de vous inscrire en tant que membre, et le monde des mots s'ouvre à vous. Parcourez les étagères, laissez-vous envoûter par les résumés alléchants et les couvertures intrigantes, puis sélectionnez les joyaux littéraires qui vous appellent.
-
-Une fois votre choix fait, présentez-vous au comptoir de prêt, où notre équipe chaleureuse et compétente vous accueillera avec le sourire. Ils vous aideront à finaliser votre emprunt et répondront à toutes vos questions avec plaisir.
-
-Que vous soyez un voyageur chevronné à travers les mondes imaginaires, un explorateur des mystères du passé ou un aventurier à la recherche de connaissances nouvelles,<b>La Bibliothèque ONLINE</b> est votre partenaire idéal dans cette quête infinie de savoir et de divertissement.
-
-Rejoignez-nous dès aujourd'hui et laissez-vous emporter par la magie des livres à la  <b>Bibliothèque ONLINE</b></p>
- 
-</div>
-<div class="details">
-  <div class="cont">  
- <h2>Détails du produit</h2> 
-<hr width="80%">
-<div class="roz">
-  <label for="Etat">Etat:</label>
-  <p>disponible</p>
- <label for="nomlivre"><b>Nom de livre:</b></label>
- <p><?php echo $ligne['Titre'];?></p>
- <label for="nomauteur"><b>Nom d'auteur:</b></label>
- <p>Auteur</p>
- </div>
-</div>
-</div>
- <form action="Empr.php" method="post">
-   
-<input type="hidden" name="titredelivre" value="<?php echo $ligne['Titre']; ?>">
-<input type="hidden" name="numerodelivre" value="<?php echo $ligne['Numero']; ?>">
-
-    <input class="button" id="submit" type="submit" value="Emprunter" name="submit">
-
-</form>
-</div>
-<?php } ?>
+  </script>
 </body>
+
 </html>

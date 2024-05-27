@@ -85,40 +85,56 @@ mysqli_close($conn);
                 </div>
                 <div class="sidebar-brand-text mx-3">Webook</div>
             </a>
+
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
+
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="../Admin/AdminDash.php">
+                <a class="nav-link" href="../AdminDash.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Tableau de bord</span></a>
             </li>
+
             <!-- Divider -->
             <hr class="sidebar-divider">
+
             <!-- Heading -->
             <div class="sidebar-heading">
                 Gestion
             </div>
+
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link" href="../Admin/Livres/Book.php">
+            <li class="nav-item ">
+                <a class="nav-link" href="Livres/Book.php">
                     <i class="fas fa-fw fa-book"></i>
                     <span>Livres</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="../Admin/Auteurs/Auteur.php">
+                <a class="nav-link" href="Documents/Documents.php">
+                    <i class="fas fa-fw fa-book"></i>
+                    <span>Documents</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="Auteurs/Auteur.php">
                     <i class="fas fa-fw fa-user"></i>
                     <span>Auteurs</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="../Admin/Genres/Genre.php">
+                <a class="nav-link" href="Genres/Genre.php">
                     <i class="fas fa-fw fa-swatchbook"></i>
                     <span>Genres</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="../Admin/Format/Format.php">
+                <a class="nav-link" href="Format/Format.php">
                     <i class="fas fa-fw fa-align-left"></i>
                     <span>Formats</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="ConfirmEmprunt/Comfirmemprunt.php">
+                    <i class="fas fa-fw fa-align-left"></i>
+                    <span>Confirm Emprunt</span></a>
             </li>
         </ul>
         <!-- End of Sidebar -->
