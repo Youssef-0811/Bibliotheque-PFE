@@ -22,6 +22,7 @@ include('pagination.php');
     <title>Document</title>
 </head>
 <header>
+    
     <?php
 
     include('HF/header2.php')
@@ -30,20 +31,25 @@ include('pagination.php');
 
 <body>
 
-
-
-
     <?php
     include('slider.php')
     ?>
+<div class="h-divider">
+  <div class="shadow"></div>
+  <div class="text2"><img src="images/blue book open .jpg" /></div>
+</div>
 
 
+
+    <div class="cateSear">
+
+        <!--categorie-->
 
     <div class="selectdiv">
         <form id="categoryForm" action="index.php" method="GET" >
             <label>
                 <select name="Categorie" onchange="submitForm()">
-                    <option selected> Select Categorie </option>
+                    <option selected> Selectioner Categorie </option>
                     <?php
             // Fetch categories from database
             $sql = "SELECT Nom FROM format";
@@ -63,15 +69,34 @@ include('pagination.php');
             </label>
         </form>
     </div>
+
+
+ <!--search--> 
+
+
+<div class="input-container">
+<form action="#" method="GET">
+  <input type="text" name="search" class="input" placeholder="chercher...">
+  <span class="icon">
+   <button type="submit" id="searchButton">
+    <svg width="19px" height="19px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path opacity="1" d="M14 5H20" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path opacity="1" d="M14 8H17" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M21 11.5C21 16.75 16.75 21 11.5 21C6.25 21 2 16.75 2 11.5C2 6.25 6.25 2 11.5 2" stroke="#000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path> <path opacity="1" d="M22 22L20 20" stroke="#000" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+  
+</button></span>
+</div>
+</form>
+
+</div>
     <script>
     function submitForm() {
         document.getElementById("categoryForm").submit();
     }
 </script>
     <br>
+    
 
     <div class="arrivals" id="arrivals">
-        <h2>Books Available</h2>
+        
+        <h2>Les livres disponibles</h2>
         <div class="arrivals_box">
             <?php
             // Check if search query is set
@@ -200,7 +225,7 @@ include('pagination.php');
     </div>
     <div class="pagination">
 
-        <a class="pagi" href="?page-nr=1#arrivals">first</a>
+        <a class="pagi" href="?page-nr=1#arrivals"><<</a>
 
         <?php
         if (isset($_GET['page-nr']) && $_GET['page-nr'] > 1) {
@@ -221,23 +246,7 @@ include('pagination.php');
         ?>
 
 
-        <div class="page-numbers">
-
-            <?php
-
-            for ($counter = 1; $counter <= $pages; $counter++) {
-            ?>
-                <a class="pagi" href="?page-nr=<?php echo $counter ?>#arrivals"><?php echo $counter ?></a>
-
-            <?php
-            }
-
-
-
-            ?>
-
-
-        </div>
+  
 
 
         <?php
@@ -267,7 +276,7 @@ include('pagination.php');
 
 
 
-        <a class="pagi" href="?page-nr=<?php echo $pages ?>#arrivals">last</a>
+        <a class="pagi" href="?page-nr=<?php echo $pages ?>#arrivals">>></a>
 
 
 

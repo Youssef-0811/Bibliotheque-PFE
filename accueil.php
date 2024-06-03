@@ -22,7 +22,7 @@ include('DataBase.php');
     <link rel="stylesheet" href="header-footer2.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-
+    
 
     <title>Document</title>
 </head>
@@ -59,19 +59,53 @@ $resulta = mysqli_query($conn, $sqla);
 ?>
 
 <body>
-    <div class="container">
+<div class="container">
 
-        <div class="emp">
-            <div class="txt">
-                <h1>Bonjour dans Bibliotheque Online</h1>
-                <h4>Emprunter Maintenant</h4>
-                <div class="buttn">
-                    <a href="index.php"><button id="btn">Emprunter</button></a>
-                </div>
-            </div>
-        </div>
+<div class="emp">
+    <img src="images/vector.jpg" alt="">
+</div>
+
+
+    <div class="txt">
+    <div>
+  <h1 class="main-heading">
+  DÉCOUVREZ LE MONDE DU SAVOIR DANS NOTRE BIBLIOTHÈQUE
+  </h1>
+  <p class="sub-heading">
+EXPLOREZ NOTRE VASTE COLLECTION DE LIVRES, REVUES ET ARCHIVES NUMÉRIQUES, ET IMMERGEZ-VOUS DANS LA RICHE TAPISSERIE DE LITTERATURE ET DE CONNAISSANCES.
+  </p>
+  <div class="button-container">
+    <a
+      class="explore-button"
+      href="#"
+    >
+      Explore Library
+    </a>
+    <a
+      class="join-button"
+      href="#"
+    >
+      Join Now
+    </a>
+  </div>
+</div>
     </div>
-    <br>
+
+</div>
+    
+    <div class="separator">
+    <svg class="separator__svg" width="100%" height="350" viewBox="0 0 100 100" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="myGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="10%" style="stop-color: rgba(0,108,3,1); stop-opacity: 1;" />
+      <stop offset="30%" style="stop-color: rgba(24,121,9,1); stop-opacity: 1;" />
+      <stop offset="100%" style="stop-color: rgba(255,255,255,1); stop-opacity: 1;" />
+    </linearGradient>
+  </defs>
+  <path d="M 100 100 V 10 L 0 100" fill="url(#myGradient)"/>
+  <path d="M 30 73 L 100 18 V 10 Z" fill="#308355" stroke-width="0"/>
+</svg>
+
 
 
 
@@ -206,7 +240,7 @@ $resulta = mysqli_query($conn, $sqla);
                         <p> <?php echo $ligne['Nom'];
                             echo $ligne['Prenom']; ?> </p>
 
-                        <form action="voirauteur.php" method="post">
+                        <form action="testpage.php" method="post">
 
                             <input type="hidden" name="idauteur" value="<?php echo $ligne['Id']; ?>">
 

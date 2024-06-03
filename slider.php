@@ -18,18 +18,28 @@ include('DataBase.php');
 </head>
 <body>
     <style>
+        .container2 p{
+            display: flex;
+            justify-content:center;
+            font-family:'FontAwesome';
+            margin-top: -38px;
+        }
 
 .container2{
     position: relative;
+    background-image: url(images/ty.jpg);
+    background-repeat: no-repeat;
+    border-radius: 10px;
     left:50%;
     transform: translate(-50%,-50%);
     width:90%;
     height:27rem;
     padding:50px;
     margin-top: 27rem;
-    background-color:azure;
+    background-color:white;
     box-shadow: 0 30px 50px #dbdbdb;
-    margin-bottom: -10rem
+    margin-bottom: -10rem;
+    overflow: hidden;
 }
 #slide2{
     width:max-content;
@@ -142,7 +152,7 @@ include('DataBase.php');
       height: 20rem;
       padding: 20px;
       margin-top: 20rem;
-      background-color: azure;
+      background-color: white;
       box-shadow: 0 30px 50px #dbdbdb;
       margin-bottom: -10rem;
   }
