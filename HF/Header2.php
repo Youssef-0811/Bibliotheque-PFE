@@ -78,7 +78,7 @@
         </li>';
     } else {
       // User is not logged in
-      
+
       echo '<li class="hideOnMobile"><a href="../Login/User/userLogin.php">Login</a></li>';
     }
     ?>
@@ -96,7 +96,7 @@
 
     </ul>
   </ul>
- 
+
 
 
   <script>

@@ -8,9 +8,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
     // Retrieve data from the form
     $id_client = $_SESSION['user_id']; // Assuming you have a way to determine the client ID, here set to 1 as an example
     $numero = $_POST['numerodelivre'];
-    $dateActuelle = date("Y-m-d"); // get the current date
-    $date_retour = date("Y-m-d", strtotime($dateActuelle . " +7 days")); // Calculate the return date (7 days from current date)
-    $date_emprunt = date("Y-m-d");
+    $date_emprunt = $_POST['departureDate']; // Use the selected departure date as the borrowing date
+    $date_retour = $_POST['returnDate']; // Use the selected return date as the return date
 
     // Prepare SQL statement to check if the book is already borrowed by the client
     $stmt = $conn->prepare("SELECT COUNT(*) FROM emprunte_en_attente WHERE numero_livre_emprunter = ? AND id_client = ?");
@@ -38,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
         } else {
             $stmt->close();
             // Insert data into the "emprunt" table
-            $sql = "INSERT INTO emprunte_en_attente (id_client, numero_livre_emprunter, date_emprunt,date_retour ) VALUES (?, ?, ?, ?)";
+            $sql = "INSERT INTO emprunte_en_attente (id_client, numero_livre_emprunter, date_emprunt, date_retour) VALUES (?, ?, ?, ?)";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param('ssss', $id_client, $numero, $date_emprunt, $date_retour);
             if ($stmt->execute()) {

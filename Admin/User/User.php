@@ -20,6 +20,7 @@
     <!-- Include jQuery library -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/6r6QF/QRTT13c94pjodroF9m3p2PLB9o4q1fOu/qlI=" crossorigin="anonymous"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 </head>
 <style>
@@ -102,7 +103,50 @@ if ($result_admin_info && mysqli_num_rows($result_admin_info) > 0) {
         width: 80%;
         /* Could be more or less, depending on screen size */
     }
+
+    /* Responsive Sidebar */
+    @media (max-width: 768px) {
+        .sidebar {
+            position: fixed;
+            top: 56px;
+            left: -250px;
+            width: 100px;
+            height: calc(100% - 56px);
+            z-index: 1;
+            background-color: #343a40;
+            overflow-x: hidden;
+            transition: left 0.5s;
+        }
+
+        .show-sidebar {
+            left: 0;
+        }
+
+        /* Hide the text of navigation items */
+        .sidebar .nav-link span {
+            display: none;
+        }
+
+        /* Show only the icons */
+        .sidebar .nav-link i {
+            margin-right: 0;
+        }
+    }
+
+    /* Define color for the black bars */
+    .black-bars {
+        color: black;
+    }
 </style>
+<script>
+    // Responsive Sidebar Functionality
+    $(document).ready(function() {
+        $('#sidebarToggleTop').on('click', function() {
+            console.log("Clicked on the menu button");
+            $('.sidebar').toggleClass('show-sidebar');
+        });
+    });
+</script>
 
 <body id="page-top">
 
@@ -187,6 +231,10 @@ if ($result_admin_info && mysqli_num_rows($result_admin_info) > 0) {
 
                 <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars black-bars"></i>
+                    </button>
 
                     <!-- Topbar Search -->
                     <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
@@ -298,41 +346,7 @@ if ($result_admin_info && mysqli_num_rows($result_admin_info) > 0) {
 
 
 
-    <!-- Edit User Modal -->
-    <div id="editUserModal" class="modal">
-        <div class="modal-content" style="margin: 5% auto;">
-            <span class="close">&times;</span>
-            <h2>Edit User</h2>
-            <form id="editUserForm" action="editUser.php" method="post">
-                <!-- Hidden input for user ID -->
-                <input type="hidden" id="editUserId" name="editUserId">
 
-                <div class="form-group">
-                    <label for="editUserNom">Nom</label>
-                    <input type="text" class="form-control" id="editUserNom" name="editUserNom">
-                </div>
-                <div class="form-group">
-                    <label for="editUserPrenom">Prénom</label>
-                    <input type="text" class="form-control" id="editUserPrenom" name="editUserPrenom">
-                </div>
-                <div class="form-group">
-                    <label for="editUserEmail">Email</label>
-                    <input type="email" class="form-control" id="editUserEmail" name="editUserEmail">
-                </div>
-                <div class="form-group">
-                    <label for="editUserDateNaissance">Date de Naissance</label>
-                    <input type="date" class="form-control" id="editUserDateNaissance" name="editUserDateNaissance">
-                </div>
-                <div class="form-group">
-                    <label for="editUserFiliere">Filière</label>
-                    <input type="text" class="form-control" id="editUserFiliere" name="editUserFiliere">
-                </div>
-
-                <button type="submit" class="btn btn-primary">Save Changes</button>
-                <button type="button" class="btn btn-secondary" id="cancelEditUserButton">Cancel</button>
-            </form>
-        </div>
-    </div>
 
     <!-- Delete User Modal -->
     <div id="deleteUserModal" class="modal">
@@ -346,64 +360,6 @@ if ($result_admin_info && mysqli_num_rows($result_admin_info) > 0) {
     </div>
 
     <script>
-        // Function to open edit user modal
-        function openEditUserModal(userId, nom, prenom, email, dateNaissance, filiere) {
-            var modal = document.getElementById('editUserModal');
-            var form = document.getElementById('editUserForm');
-
-            // Check if the modal and form elements exist
-            if (modal && form) {
-                // Set form values with user data
-                document.getElementById('editUserId').value = userId;
-                document.getElementById('editUserNom').value = nom;
-                document.getElementById('editUserPrenom').value = prenom;
-                document.getElementById('editUserEmail').value = email;
-                document.getElementById('editUserDateNaissance').value = dateNaissance;
-                document.getElementById('editUserFiliere').value = filiere;
-
-                modal.style.display = "block";
-
-                // Set up event listener for cancel button
-                var cancelEditUserButton = document.getElementById('cancelEditUserButton');
-                cancelEditUserButton.addEventListener('click', function() {
-                    modal.style.display = "none";
-                });
-
-                // Handle form submission
-                form.onsubmit = function(event) {
-                    event.preventDefault(); // Prevent default form submission
-                    // Submit the form data asynchronously
-                    var formData = new FormData(form);
-                    fetch('editUser.php', {
-                            method: 'POST',
-                            body: formData
-                        })
-                        .then(response => response.text())
-                        .then(data => {
-                            // Log server response
-                            console.log(data);
-                            // Check if the response contains the success message
-                            if (data.includes("User updated successfully")) {
-                                // Display a success message
-                                console.log('User updated successfully');
-                                // Close the modal
-                                modal.style.display = "none";
-                                // Reload the page only when the save operation is successful
-                                window.location.reload();
-                            } else {
-                                // Display an error message
-                                alert('Error updating user: ' + data);
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Error:', error); // Log any errors
-                        });
-                };
-            } else {
-                console.error("Modal or form element not found");
-            }
-        }
-
         // Function to open delete user modal
         function openDeleteUserModal(userName) {
             var modal = document.getElementById('deleteUserModal');

@@ -18,6 +18,8 @@
 
     <!-- Custom styles for this template-->
     <link href="../css/sb-admin-2.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
     <?php
 
@@ -236,7 +238,50 @@
             bottom: 0;
             width: 100%;
         }
+
+        /* Responsive Sidebar */
+        @media (max-width: 768px) {
+            .sidebar {
+                position: fixed;
+                top: 56px;
+                left: -250px;
+                width: 100px;
+                height: calc(100% - 56px);
+                z-index: 1;
+                background-color: #343a40;
+                overflow-x: hidden;
+                transition: left 0.5s;
+            }
+
+            .show-sidebar {
+                left: 0;
+            }
+
+            /* Hide the text of navigation items */
+            .sidebar .nav-link span {
+                display: none;
+            }
+
+            /* Show only the icons */
+            .sidebar .nav-link i {
+                margin-right: 0;
+            }
+        }
+
+        /* Define color for the black bars */
+        .black-bars {
+            color: black;
+        }
     </style>
+    <script>
+        // Responsive Sidebar Functionality
+        $(document).ready(function() {
+            $('#sidebarToggleTop').on('click', function() {
+                console.log("Clicked on the menu button");
+                $('.sidebar').toggleClass('show-sidebar');
+            });
+        });
+    </script>
 </head>
 
 <body id="page-top">
@@ -314,6 +359,10 @@
             <div id="content">
                 <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars black-bars"></i>
+                    </button>
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Nav Item - User Information -->
@@ -361,18 +410,10 @@
                         </div>
                     </div>
 
-                    <!-- Number of documents added -->
-                    <div class="col-lg-6 mb-4">
-                        <div class="card border-left-info shadow h-100 py-2">
-                            <div class="card-body">
-                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Total Number of Documents</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $total_documents ?></div>
-                            </div>
-                        </div>
-                    </div>
+
 
                     <!-- Top users who added the most documents -->
-                    <div class="col-lg-6 mb-4">
+                    <div class="col-lg-12 mb-4">
                         <div class="card border-left-warning shadow h-100 py-2">
                             <div class="card-body">
                                 <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Top Users Who Added the Most Documents</div>
@@ -398,52 +439,56 @@
                         </div>
                     </div>
 
-
-                    <!-- Average rating of books -->
-                    <div class="col-lg-12 mb-4">
-                        <div class="card border-left-secondary shadow h-100 py-2">
-                            <div class="card-body">
-                                <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">Average Rating of Books</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                    <?php
-                                    // Calculate the number of full stars
-                                    $full_stars = floor($average_book_rating);
-
-                                    // Calculate the number of half stars
-                                    $half_star = $average_book_rating - $full_stars;
-
-                                    // Display full stars
-                                    for ($i = 0; $i < $full_stars; $i++) {
-                                        echo '<i class="fas fa-star text-warning"></i>';
-                                    }
-
-                                    // Display half star (if any)
-                                    if ($half_star > 0) {
-                                        echo '<i class="fas fa-star-half-alt text-warning" style="width: 0.5em;"></i>';
-                                    }
-
-                                    // Calculate the number of empty stars
-                                    $empty_stars = 5 - ceil($average_book_rating);
-
-                                    // Display empty stars
-                                    for ($i = 0; $i < $empty_stars; $i++) {
-                                        echo '<i class="far fa-star text-secondary"></i>';
-                                    }
-
-                                    // Output the rating value
-                                    echo "&nbsp;&nbsp;" . " $average_book_rating";
-                                    ?>
+                    <div class="row">
+                        <!-- Number of documents added -->
+                        <div class="col-lg-6 mb-4">
+                            <div class="card border-left-info shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Total Number of Documents</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $total_documents ?></div>
                                 </div>
                             </div>
                         </div>
+                        <!-- Average rating of books -->
+                        <div class="col-lg-6 mb-4">
+                            <div class="card border-left-secondary shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">Average Rating of Books</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                        <?php
+                                        // Calculate the number of full stars
+                                        $full_stars = floor($average_book_rating);
+
+                                        // Calculate the number of half stars
+                                        $half_star = $average_book_rating - $full_stars;
+
+                                        // Display full stars
+                                        for ($i = 0; $i < $full_stars; $i++) {
+                                            echo '<i class="fas fa-star text-warning"></i>';
+                                        }
+
+                                        // Display half star (if any)
+                                        if ($half_star > 0) {
+                                            echo '<i class="fas fa-star-half-alt text-warning" style="width: 0.5em;"></i>';
+                                        }
+
+                                        // Calculate the number of empty stars
+                                        $empty_stars = 5 - ceil($average_book_rating);
+
+                                        // Display empty stars
+                                        for ($i = 0; $i < $empty_stars; $i++) {
+                                            echo '<i class="far fa-star text-secondary"></i>';
+                                        }
+
+                                        // Output the rating value
+                                        echo "&nbsp;&nbsp;" . " $average_book_rating";
+                                        ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
-
-
-
-
-
-
-
 
                     <!-- Top users who borrowed the most books -->
                     <div class="row">
@@ -475,6 +520,19 @@
                             </div>
                         </div>
                     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
                     <!-- Top three genres and Most and least borrowed formats -->

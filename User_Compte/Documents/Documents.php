@@ -45,7 +45,7 @@
 
     <!-- Mobile Menu -->
     <div id="mobile-menu" class="hidden md:hidden bg-gray-900 text-white p-4">
-        <a href="../Edit_Infos/UserCompte.php" class="block py-2">Edit Infos</a>
+        <a href="../Edit_Infos/editInfos.php" class="block py-2">Edit Infos</a>
         <a href="../Books/Books.php" class="block py-2">Books</a>
         <a href="#" class="block py-2">Documents</a>
         <a href="../../accueil.php" class="block py-2">Return to Accueil</a>
@@ -53,7 +53,7 @@
 
     <!-- Sidebar -->
     <div class="sidebar md:block bg-gray-900 text-white h-screen w-64 fixed top-0 left-0 pt-24 overflow-x-hidden" style="padding-top: 40px;">
-        <a href="../Edit_Infos/UserCompte.php" class="block py-3 px-4 hover:bg-gray-700 flex items-center">
+        <a href="../Edit_Infos/editInfos.php" class="block py-3 px-4 hover:bg-gray-700 flex items-center">
             <img src="../../images/icons/boy-front-color.png" alt="Documents Image" width="30px" class="mr-2">Edit Infos
         </a>
         <a href="../Books/Books.php" class="block py-3 px-4 hover:bg-gray-700 flex items-center">

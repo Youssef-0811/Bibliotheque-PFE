@@ -48,6 +48,12 @@ mysqli_close($conn);
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <!-- Custom styles for this template-->
     <link href="../css/sb-admin-2.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="../../css/sb-admin-2.css" rel="stylesheet">
+
     <style>
         /* CSS to hide the dropdown initially */
         .dropdown-menu {
@@ -71,13 +77,55 @@ mysqli_close($conn);
     }
 
     */
+        /* Responsive Sidebar */
+        @media (max-width: 768px) {
+            .sidebar {
+                position: fixed;
+                top: 56px;
+                left: -250px;
+                width: 100px;
+                height: calc(100% - 56px);
+                z-index: 1;
+                background-color: #343a40;
+                overflow-x: hidden;
+                transition: left 0.5s;
+            }
+
+            .show-sidebar {
+                left: 0;
+            }
+
+            /* Hide the text of navigation items */
+            .sidebar .nav-link span {
+                display: none;
+            }
+
+            /* Show only the icons */
+            .sidebar .nav-link i {
+                margin-right: 0;
+            }
+        }
+
+        /* Define color for the black bars */
+        .black-bars {
+            color: black;
+        }
     </style>
+    <script>
+        // Responsive Sidebar Functionality
+        $(document).ready(function() {
+            $('#sidebarToggleTop').on('click', function() {
+                console.log("Clicked on the menu button");
+                $('.sidebar').toggleClass('show-sidebar');
+            });
+        });
+    </script>
 </head>
 
 <body id="page-top">
     <div id="wrapper">
-        <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="AdminDash.php">
                 <div class="sidebar-brand-icon rotate-n-15">
@@ -91,7 +139,7 @@ mysqli_close($conn);
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="../AdminDash.php">
+                <a class="nav-link" href="#">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Tableau de bord</span></a>
             </li>
@@ -121,6 +169,11 @@ mysqli_close($conn);
                     <span>Auteurs</span></a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="User/User.php">
+                    <i class="fas fa-fw fa-user"></i>
+                    <span>User</span></a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="Genres/Genre.php">
                     <i class="fas fa-fw fa-swatchbook"></i>
                     <span>Genres</span></a>
@@ -137,16 +190,21 @@ mysqli_close($conn);
                     <span>Confirm Emprunt</span></a>
             </li>
         </ul>
-        <!-- End of Sidebar -->
+
+
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars black-bars"></i>
+                    </button>
                     <!-- Topbar Search -->
                     <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
                             <div class="input-group-append">
-                                <h4>Modifier les informations de l'administrateur</h4>
+                                <h4>Modifier Vos Informations</h4>
                             </div>
                         </div>
                     </form>

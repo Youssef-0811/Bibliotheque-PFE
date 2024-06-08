@@ -18,6 +18,7 @@
 
     <!-- Custom styles for this template-->
     <link href="../../css/sb-admin-2.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 </head>
 
@@ -59,7 +60,50 @@ if ($result_admin_info && mysqli_num_rows($result_admin_info) > 0) {
     .nav-item.dropdown:hover .dropdown-menu {
         display: block;
     }
+
+    /* Responsive Sidebar */
+    @media (max-width: 768px) {
+        .sidebar {
+            position: fixed;
+            top: 56px;
+            left: -250px;
+            width: 100px;
+            height: calc(100% - 56px);
+            z-index: 1;
+            background-color: #343a40;
+            overflow-x: hidden;
+            transition: left 0.5s;
+        }
+
+        .show-sidebar {
+            left: 0;
+        }
+
+        /* Hide the text of navigation items */
+        .sidebar .nav-link span {
+            display: none;
+        }
+
+        /* Show only the icons */
+        .sidebar .nav-link i {
+            margin-right: 0;
+        }
+    }
+
+    /* Define color for the black bars */
+    .black-bars {
+        color: black;
+    }
 </style>
+<script>
+    // Responsive Sidebar Functionality
+    $(document).ready(function() {
+        $('#sidebarToggleTop').on('click', function() {
+            console.log("Clicked on the menu button");
+            $('.sidebar').toggleClass('show-sidebar');
+        });
+    });
+</script>
 
 <body id="page-top">
 
@@ -143,6 +187,11 @@ if ($result_admin_info && mysqli_num_rows($result_admin_info) > 0) {
 
                 <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars black-bars"></i>
+                    </button>
+
                     <!-- Topbar Search -->
                     <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
@@ -182,60 +231,7 @@ if ($result_admin_info && mysqli_num_rows($result_admin_info) > 0) {
 
                     <!-- Page Heading -->
                     <!-- Ligne de statistiques -->
-                    <div class="row">
-                        <!-- Carte nombre d'avis positifs -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Avis positifs</div>
-                                            <div id="statDivAvisPos" class="h5 mb-0 font-weight-bold text-gray-800"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Carte nombre d'avis négatifs -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Avis négatifs</div>
-                                            <div id="statDivAvisNeg" class="h5 mb-0 font-weight-bold text-gray-800"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Carte note moyenne -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Note moyenne</div>
-                                            <div id="statDivAvisMoy" class="h5 mb-0 font-weight-bold text-gray-800"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Carte nombre d'avis moyens -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Nombre d'avis moyens</div>
-                                            <div id="statDivAvisNb" class="h5 mb-0 font-weight-bold text-gray-800"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
 
                     <div class="container-fluid" style="padding-right: 0px;padding-left: 0px;">
                         <!-- Page Heading -->

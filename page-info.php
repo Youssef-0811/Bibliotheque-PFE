@@ -1,151 +1,158 @@
+<!-- ok -->
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="utf-8">
-
-
-  <title>user about me section - Bootdey.com</title>
+  <title>Book Details</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="header-footer2.css">
-  <style type="text/css">
+  <style>
     body {
+      font-family: Arial, sans-serif;
+      background-color: #ffffff;
+      color: #1a202c;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #ffffff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+    }
+
+    .book-details img {
+      width: 150px;
+      height: 100px;
+      border-radius: 10px;
+    }
+
+    .author-info {
+      margin-bottom: 20px;
+    }
+
+    .author-name {
+      font-size: 24px;
+      font-weight: bold;
+      color: #1a202c;
+    }
+
+    .book-info {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .book-info li {
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+
+    .info-label {
+      font-weight: bold;
+      color: #007bff;
+    }
+
+    .book-summary {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #f9f9f9;
+      border-radius: 10px;
+    }
+
+    .reviews {
       margin-top: 20px;
     }
 
-    .card-style1 {
-      box-shadow: 0px 0px 10px 0px rgb(89 75 128 / 9%);
-    }
-
-    .border-0 {
-      border: 0 !important;
-    }
-
-    .card {
-      position: relative;
+    .review {
       display: flex;
-      flex-direction: column;
-      min-width: 0;
-      word-wrap: break-word;
-      background-color: #fff;
-      background-clip: border-box;
-      border: 1px solid rgba(0, 0, 0, .125);
-      border-radius: 0.25rem;
+      margin-bottom: 20px;
     }
 
-    section {
-      padding: 120px 0;
-      overflow: hidden;
-      background: #fff;
+    .reviewer-avatar {
+      width: 50px;
+      height: 50px;
+      background-color: #ddd;
+      border-radius: 50%;
     }
 
-    .mb-2-3,
-    .my-2-3 {
-      margin-bottom: 2.3rem;
+    .reviewer-info {
+      margin-left: 20px;
     }
 
-    .section-title {
-      font-weight: 600;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      margin-bottom: 10px;
-      position: relative;
-      display: inline-block;
+    .reviewer-name {
+      font-weight: bold;
     }
 
-    .text-primary {
-      color: #ceaa4d !important;
+    .review-comment {
+      margin: 0;
     }
 
-    .text-secondary {
-      color: #15395A !important;
+    .no-reviews {
+      color: #888;
     }
 
-    .font-weight-600 {
-      font-weight: 600;
+    .button {
+      padding: 10px 20px;
+      background-color: black;
+      color: #ffffff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
     }
 
-    .display-26 {
-      font-size: 1.3rem;
+    .button:hover {
+      background-color: #292929;
     }
 
-    @media screen and (min-width: 992px) {
-      .p-lg-7 {
-        padding: 4rem;
-      }
+    .review-rating {
+      font-size: 16px;
     }
 
-    @media screen and (min-width: 768px) {
-      .p-md-6 {
-        padding: 3.5rem;
-      }
+    .star {
+      color: #ccc;
     }
 
-    @media screen and (min-width: 576px) {
-      .p-sm-2-3 {
-        padding: 2.3rem;
-      }
+    .filled {
+      color: gold;
     }
 
-    .p-1-9 {
-      padding: 1.9rem;
+    .form-group {
+      margin-bottom: 15px;
     }
 
-    .bg-secondary {
-      background: #15395A !important;
+    .other-books {
+      margin-top: 40px;
     }
 
-    @media screen and (min-width: 576px) {
-
-      .pe-sm-6,
-      .px-sm-6 {
-        padding-right: 3.5rem;
-      }
+    .other-books img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 10px;
     }
 
-    @media screen and (min-width: 576px) {
-
-      .ps-sm-6,
-      .px-sm-6 {
-        padding-left: 3.5rem;
-      }
+    .book-card {
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 10px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+      text-align: center;
     }
 
-    .pe-1-9,
-    .px-1-9 {
-      padding-right: 1.9rem;
-    }
-
-    .ps-1-9,
-    .px-1-9 {
-      padding-left: 1.9rem;
-    }
-
-    .pb-1-9,
-    .py-1-9 {
-      padding-bottom: 1.9rem;
-    }
-
-    .pt-1-9,
-    .py-1-9 {
-      padding-top: 1.9rem;
-    }
-
-    .mb-1-9,
-    .my-1-9 {
-      margin-bottom: 1.9rem;
-    }
-
-    @media (min-width: 992px) {
-      .d-lg-inline-block {
-        display: inline-block !important;
-      }
-    }
-
-    .rounded {
-      border-radius: 0.25rem !important;
-      width: 20rem;
+    .book-title {
+      min-height: 3em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   </style>
 </head>
@@ -153,143 +160,275 @@
 <body>
   <header>
     <?php
-
-    include('HF/Header2.php');
+    include('HF/header2.php');
     include('DataBase.php');
     ?>
+
   </header>
-  <?php
-  if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submitLiv'])) {
 
+  <main class="container" style="padding-top: 90px;">
+    <?php
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submitLiv'])) {
+      $id_livre = mysqli_real_escape_string($conn, $_POST['id-livre']);
 
-    $id_livre = mysqli_real_escape_string($conn, $_POST['id-livre']);
+      $sql = "SELECT * FROM livres WHERE Numero = $id_livre ";
+      $result = mysqli_query($conn, $sql);
+      $ligne = mysqli_fetch_assoc($result);
 
+      $sqlaut = "SELECT livres.Image AS livre_image,
+                        livres.Titre AS livre_titre,
+                        auteurs.Nom AS auteur_nom,
+                        auteurs.Bio AS auteur_bio,
+                        format.Nom AS format_nom,
+                        livres.Disponible AS livre_disponible,
+                        book_review.id_client AS reviewer_id,
+                        book_review.review AS review_comment,
+                        book_review.rating AS review_rating,
+                        user.Nom AS reviewer_name
+                    FROM livres
+                    INNER JOIN auteurs ON livres.Auteur_Id = auteurs.Id
+                    INNER JOIN format ON livres.Format_Id = format.Id
+                    LEFT JOIN book_review ON livres.Numero = book_review.id_book
+                    LEFT JOIN user ON book_review.id_client = user.ID
+                    WHERE livres.Numero = $id_livre";
+      $resultaut = mysqli_query($conn, $sqlaut);
 
-    $sql = "SELECT * FROM livres WHERE Numero = $id_livre ";
+      // Initialize $ligneaut
+      $ligneaut = null;
+      if ($resultaut && mysqli_num_rows($resultaut) > 0) {
+        $ligneaut = mysqli_fetch_assoc($resultaut);
+      }
 
-    $result = mysqli_query($conn, $sql);
+      // Fetch other books by the same author
+      $sqlOtherBooks = "SELECT Numero, Titre, Image FROM livres WHERE Auteur_Id = (SELECT Auteur_Id FROM livres WHERE Numero = $id_livre) AND Numero != $id_livre LIMIT 4";
+      $resultOtherBooks = mysqli_query($conn, $sqlOtherBooks);
+    }
 
-    $ligne = mysqli_fetch_assoc($result);
+    // Check if the book has reviews
+    $hasReviews = ($ligneaut !== null);
+    ?>
 
-    $sqlaut = "SELECT auteurs.Nom FROM auteurs JOIN livres ON auteurs.Id = livres.Auteur_Id WHERE livres.Numero = $id_livre ";
-    $resultaut =  mysqli_query($conn, $sqlaut);
-    $ligneaut = mysqli_fetch_assoc($resultaut);
-  }
+    <?php if ($result && mysqli_num_rows($result) > 0) { ?>
+      <div class="row">
+        <div class="col-lg-6">
+          <img src="data:image/jpeg;base64,<?php echo base64_encode($ligne['Image']); ?>" alt="Book Image" class="img-fluid" style="width: 75%; height: auto;">
+        </div>
 
-  ?>
-  <section class="bg-light">
-    <div class="container">
-      <?php if ($result && mysqli_num_rows($result) > 0) { ?>
-        <div class="row">
-          <div class="col-lg-12 mb-4 mb-sm-5">
-            <div class="card card-style1 border-0">
-              <div class="card-body p-1-9 p-sm-2-3 p-md-6 p-lg-7">
-                <div class="row align-items-center">
-                  <div class="col-lg-6 mb-4 mb-lg-0">
-                    <img src="data:image/jpeg;base64,<?php echo base64_encode($ligne['Image']); ?>">
-                  </div>
-                  <div class="col-lg-6 px-xl-10">
-                    <div class="bg-secondary d-lg-inline-block py-1-9 px-1-9 px-sm-6 mb-1-9 rounded">
+        <div class="col-lg-6">
+          <div class="author-info">
+            <h2 style="color: black;"><?php echo $ligne['Titre']; ?></h2>
+            <h5 style="color: #888;"><?php echo $ligneaut['auteur_nom']; ?></h3>
+          </div>
+          <ul class="book-info">
+            <li><span class="info-label" style="color: black;">Status:</span> <?php echo ($ligneaut['livre_disponible'] == 1 ? 'Available' : 'Not available'); ?></li>
+            <li><span class="info-label" style="color: black;">Category:</span> <?php echo $ligneaut['format_nom']; ?></li>
+          </ul>
+          <div class="book-summary">
+            <h4 class="section-title" style="color: black;">Summary</h4>
+            <p style="color: #888;"><?php echo $ligne['Resume']; ?></p>
+          </div>
 
-                      <?php if ($result && mysqli_num_rows($resultaut) > 0) {
-                        $Auteur = $ligneaut['Nom']; ?>
-                        <label for="nomauteur"><b>Nom d'auteur:</b></label>
-                        <h3 class="h2 text-white mb-0"><?php echo $Auteur; ?> </h3>
-                      <?php } ?>
-                      <span class="text-primary">Auteur</span>
+          <form id="emprunterForm" action="Empr.php" method="post">
+            <input type="hidden" name="titredelivre" value="<?php echo $ligne['Titre']; ?>">
+            <input type="hidden" name="numerodelivre" value="<?php echo $ligne['Numero']; ?>">
+
+            <?php if ($ligneaut['livre_disponible'] == 1) { ?>
+              <div class="form-group">
+                <label for="departureDate">Departure Date:</label>
+                <input type="date" id="departureDate" name="departureDate" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label for="returnDate">Return Date:</label>
+                <input type="date" id="returnDate" name="returnDate" class="form-control" required disabled>
+              </div>
+              <button class="button" id="submitBtn" type="submit" name="submit" disabled>Borrow</button>
+            <?php } else { ?>
+              <div class="form-group">
+                <button class="button" style="background-color: #888; cursor: not-allowed;" id="submitBtn" type="button" disabled onmouseover="showUnavailableMessage()" onmouseout="hideUnavailableMessage()">Borrow</button>
+                <div id="unavailableMessage" style="display: none; color: red;">This book is not available at the moment. Please check again later.</div>
+              </div>
+            <?php } ?>
+          </form>
+
+          <?php if ($hasReviews) { ?>
+            <div class="reviews">
+              <h4 class="section-title">Reviews</h4>
+              <?php
+              mysqli_data_seek($resultaut, 0); // Reset pointer to the start of result set
+              $reviewCount = 0;
+              while ($review_row = mysqli_fetch_assoc($resultaut)) {
+                if ($reviewCount >= 3) break; // Stop after displaying three reviews
+                $reviewCount++;
+              ?>
+                <div class="card mb-4 shadow-sm">
+                  <div class="card-body">
+                    <div class="reviewer-info">
+                      <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="reviewer-name mb-0"><?php echo $review_row['reviewer_name']; ?></h5>
+                        <div class="review-rating">
+                          Rating:
+                          <?php
+                          $rating = $review_row['review_rating'];
+                          for ($i = 1; $i <= 5; $i++) {
+                            $starClass = ($i <= $rating) ? 'filled' : 'unfilled';
+                            echo '<span class="star ' . $starClass . '">&#9733;</span>';
+                          }
+                          ?>
+                        </div>
+                      </div>
+                      <p class="review-comment"><?php echo $review_row['review_comment']; ?></p>
                     </div>
-                    <ul class="list-unstyled mb-1-9">
-                      <li class="mb-2 mb-xl-3 display-28"><span class="display-26 text-secondary me-2 font-weight-600">Nom du livre:</span><?php echo $ligne['Titre']; ?></li>
-                      <li class="mb-2 mb-xl-3 display-28"><span class="display-26 text-secondary me-2 font-weight-600">Etat:</span> Disponible</li>
-                      <li class="mb-2 mb-xl-3 display-28"><span class="display-26 text-secondary me-2 font-weight-600">Categorie</span> <?php echo $ligne['Titre']; ?></li>
+                  </div>
+                </div>
+              <?php
+              }
+              ?>
+            </div>
+          <?php } else { ?>
+            <p class="no-reviews">No comments at the moment</p>
+          <?php }
+          // End of reviews check
+          ?>
 
-                      <form action="Empr.php" method="post">
-
-                        <input type="hidden" name="titredelivre" value="<?php echo $ligne['Titre']; ?>">
-                        <input type="hidden" name="numerodelivre" value="<?php echo $ligne['Numero']; ?>">
-
-                        <input class="button" id="submit" type="submit" value="Emprunter" name="submit">
+          <?php if ($resultOtherBooks && mysqli_num_rows($resultOtherBooks) > 0) { ?>
+            <div class="other-books">
+              <h4 class="section-title">More Books by This Author</h4>
+              <div class="row">
+                <?php while ($otherBook = mysqli_fetch_assoc($resultOtherBooks)) { ?>
+                  <div class="col-md-3">
+                    <div class="book-card">
+                      <img src="data:image/jpeg;base64,<?php echo base64_encode($otherBook['Image']); ?>" alt="Other Book Image" class="img-fluid">
+                      <h5 class="mt-2 book-title"><?php echo $otherBook['Titre']; ?></h5>
+                      <form action="page-info.php" method="post" class="form1">
+                        <input type="hidden" name="id-livre" value="<?php echo $otherBook['Numero']; ?>">
+                        <button type="submit" name="submitLiv" class="button " style="background-color: gray; font-size:smaller; padding: 5px 5px;">Learn More</button>
 
                       </form>
-                    </ul>
-                  <?php } ?>
-                  <ul class="social-icon-style1 list-unstyled mb-0 ps-0">
-                    <li><a href="#!"><i class="ti-twitter-alt"></i></a></li>
-                    <li><a href="#!"><i class="ti-facebook"></i></a></li>
-                    <li><a href="#!"><i class="ti-pinterest"></i></a></li>
-                    <li><a href="#!"><i class="ti-instagram"></i></a></li>
-                  </ul>
+                    </div>
                   </div>
-                </div>
+                <?php } ?>
               </div>
             </div>
-          </div>
-          <div class="col-lg-12 mb-4 mb-sm-5">
-            <div>
-              <span class="section-title text-primary mb-3 mb-sm-4">Resume</span>
-              <p>Edith is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-              <p class="mb-0">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed.</p>
-            </div>
-          </div>
-          <div class="col-lg-12">
-            <div class="row">
-              <div class="col-lg-12 mb-4 mb-sm-5">
-                <div class="mb-4 mb-sm-5">
-                  <span class="section-title text-primary mb-3 mb-sm-4">Skill</span>
-                  <div class="progress-text">
-                    <div class="row">
-                      <div class="col-6">Driving range</div>
-                      <div class="col-6 text-end">80%</div>
-                    </div>
-                  </div>
-                  <div class="custom-progress progress progress-medium mb-3" style="height: 4px;">
-                    <div class="animated custom-bar progress-bar slideInLeft bg-secondary" style="width:80%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="10" role="progressbar"></div>
-                  </div>
-                  <div class="progress-text">
-                    <div class="row">
-                      <div class="col-6">Short Game</div>
-                      <div class="col-6 text-end">90%</div>
-                    </div>
-                  </div>
-                  <div class="custom-progress progress progress-medium mb-3" style="height: 4px;">
-                    <div class="animated custom-bar progress-bar slideInLeft bg-secondary" style="width:90%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="70" role="progressbar"></div>
-                  </div>
-                  <div class="progress-text">
-                    <div class="row">
-                      <div class="col-6">Side Bets</div>
-                      <div class="col-6 text-end">50%</div>
-                    </div>
-                  </div>
-                  <div class="custom-progress progress progress-medium mb-3" style="height: 4px;">
-                    <div class="animated custom-bar progress-bar slideInLeft bg-secondary" style="width:50%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="70" role="progressbar"></div>
-                  </div>
-                  <div class="progress-text">
-                    <div class="row">
-                      <div class="col-6">Putting</div>
-                      <div class="col-6 text-end">60%</div>
-                    </div>
-                  </div>
-                  <div class="custom-progress progress progress-medium" style="height: 4px;">
-                    <div class="animated custom-bar progress-bar slideInLeft bg-secondary" style="width:60%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="70" role="progressbar"></div>
-                  </div>
-                </div>
-                <div>
-                  <span class="section-title text-primary mb-3 mb-sm-4">Education</span>
-                  <p>Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.</p>
-                  <p class="mb-1-9">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour.</p>
-                </div>
+          <?php } ?>
+
+        </div>
+      </div>
+    <?php } ?>
+
+  </main>
+
+  <!-- Random Books Section -->
+  <h2 class="text-2xl font-bold text-center mb-8">Decouvrez plus de livres</h2>
+
+  <?php
+  // Fetch 8 random books
+  $sqlRandomBooks = "SELECT * FROM livres ORDER BY RAND() LIMIT 8";
+  $resultRandomBooks = mysqli_query($conn, $sqlRandomBooks);
+  ?>
+  <div class="arrivals py-8 px-4" style="padding-left: 50px; padding-right: 50px; overflow-x: auto; white-space: nowrap;">
+    <div class="grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4" style="display: inline-flex;"> <!-- Changed display to inline-flex and set gap to 5px -->
+      <?php while ($randomBook = mysqli_fetch_assoc($resultRandomBooks)) { ?>
+        <div class="card" style="display: inline-block; flex: 0,0,0;"> <!-- Removed flex: 0 0 auto -->
+          <div class="card bg-gray-100 rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300" style="height: 300px; width: 200px; background-color: #F3F4F6;"> <!-- Adjusted height and width, added background color -->
+            <div class="relative h-40 overflow-hidden rounded-t-lg bg-gray-200"> <!-- Adjusted height, added background color -->
+              <img src="data:image/jpeg;base64,<?php echo base64_encode($randomBook['Image']); ?>" alt="Book cover" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+              <div class="absolute bottom-2 left-2 text-white"> <!-- Adjusted bottom padding -->
+                <h3 class="title1 text-sm"><?php echo $randomBook['Titre']; ?></h3> <!-- Adjusted text size -->
+                <p class="category1 text-xs"><?php echo $randomBook['Format_Id']; ?></p> <!-- Adjusted text size -->
               </div>
+            </div>
+            <div class="p-4"> <!-- Adjusted padding -->
+              <p class="resume1 text-xs"> <!-- Adjusted text size -->
+                <?php echo $randomBook['Resume']; ?>
+              </p>
+              <form action="page-info.php" method="post" class="form1">
+                <input type="hidden" name="id-livre" value="<?php echo $randomBook['Numero']; ?>">
+                <button type="submit" name="submitLiv" class="button " style="background-color: gray; font-size:smaller; padding: 5px 5px;">Learn More</button>
+              </form>
             </div>
           </div>
         </div>
-    </div>
-  </section>
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
-  <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script type="text/javascript">
+      <?php } ?>
+    </div><!-- /.grid -->
+  </div><!-- /.arrivals -->
+  <!-- End of Random Books Section -->
 
+  <footer>
+    <?php
+    include('HF/footer.php')
+    ?>
+  </footer>
+
+
+
+
+
+
+
+  <script>
+    function setMinDepartureDate() {
+      const departureDateInput = document.getElementById('departureDate');
+      const today = new Date().toISOString().split('T')[0];
+      departureDateInput.setAttribute('min', today);
+    }
+
+    function setMaxReturnDate() {
+      const departureDateInput = document.getElementById('departureDate');
+      const returnDateInput = document.getElementById('returnDate');
+
+      departureDateInput.addEventListener('change', function() {
+        if (this.value) {
+          const departureDateValue = new Date(this.value);
+          const maxReturnDate = new Date(departureDateValue);
+          maxReturnDate.setDate(maxReturnDate.getDate() + 15);
+          returnDateInput.setAttribute('max', maxReturnDate.toISOString().split('T')[0]);
+          returnDateInput.removeAttribute('disabled');
+
+          if (new Date(returnDateInput.value) > maxReturnDate) {
+            returnDateInput.value = '';
+          }
+        } else {
+          returnDateInput.value = '';
+          returnDateInput.setAttribute('disabled', 'disabled');
+        }
+        toggleSubmitButton();
+      });
+
+      returnDateInput.addEventListener('change', function() {
+        toggleSubmitButton();
+      });
+    }
+
+    function toggleSubmitButton() {
+      const departureDateInput = document.getElementById('departureDate');
+      const returnDateInput = document.getElementById('returnDate');
+      const submitBtn = document.getElementById('submitBtn');
+
+      if (departureDateInput.value && returnDateInput.value) {
+        submitBtn.removeAttribute('disabled');
+      } else {
+        submitBtn.setAttribute('disabled', 'disabled');
+      }
+    }
+
+    function showUnavailableMessage() {
+      document.getElementById('unavailableMessage').style.display = 'block';
+    }
+
+    function hideUnavailableMessage() {
+      document.getElementById('unavailableMessage').style.display = 'none';
+    }
+
+    window.onload = function() {
+      if (document.getElementById('departureDate')) {
+        setMinDepartureDate();
+        setMaxReturnDate();
+      }
+    };
   </script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

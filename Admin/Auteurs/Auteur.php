@@ -18,6 +18,8 @@
 
     <!-- Custom styles for this template-->
     <link href="../../css/sb-admin-2.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
 </head>
 <style>
@@ -35,7 +37,46 @@
         background-color: #f2f2f2;
         /* Or any other color you prefer */
     }
+
+    /* Responsive Sidebar */
+    @media (max-width: 768px) {
+        .sidebar {
+            position: fixed;
+            top: 56px;
+            left: -250px;
+            width: 100px;
+            height: calc(100% - 56px);
+            z-index: 1;
+            background-color: #343a40;
+            overflow-x: hidden;
+            transition: left 0.5s;
+        }
+
+        .show-sidebar {
+            left: 0;
+        }
+
+        /* Hide the text of navigation items */
+        .sidebar .nav-link span {
+            display: none;
+        }
+
+        /* Show only the icons */
+        .sidebar .nav-link i {
+            margin-right: 0;
+        }
+    }
 </style>
+
+<script>
+    // Responsive Sidebar Functionality
+    $(document).ready(function() {
+        $('#sidebarToggleTop').on('click', function() {
+            console.log("Clicked on the menu button");
+            $('.sidebar').toggleClass('show-sidebar');
+        });
+    });
+</script>
 <?php
 session_start(); // Start the session
 include("../../DataBase.php");
@@ -69,7 +110,6 @@ if ($result_admin_info && mysqli_num_rows($result_admin_info) > 0) {
     <div id="wrapper">
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="../AdminDash.php">
                 <div class="sidebar-brand-icon rotate-n-15">
@@ -85,53 +125,59 @@ if ($result_admin_info && mysqli_num_rows($result_admin_info) > 0) {
             <li class="nav-item">
                 <a class="nav-link" href="../AdminDash.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Tableau de bord</span></a>
+                    <span>Tableau de bord</span>
+                </a>
             </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider">
 
             <!-- Heading -->
-            <div class="sidebar-heading">
-                Gestion
-            </div>
+            <div class="sidebar-heading">Gestion</div>
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item ">
+            <li class="nav-item">
                 <a class="nav-link" href="../Livres/Book.php">
                     <i class="fas fa-fw fa-book"></i>
-                    <span>Livres</span></a>
+                    <span>Livres</span>
+                </a>
             </li>
-            <li class="nav-item">
+            <!-- Add 'active' class to the appropriate 'li' element -->
+            <li class="nav-item ">
                 <a class="nav-link" href="../Documents/Documents.php">
                     <i class="fas fa-fw fa-book"></i>
-                    <span>Documents</span></a>
+                    <span>Documents</span>
+                </a>
             </li>
             <li class="nav-item active">
                 <a class="nav-link" href="#">
                     <i class="fas fa-fw fa-user"></i>
-                    <span>Auteurs</span></a>
+                    <span>Auteurs</span>
+                </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="../User/User.php">
                     <i class="fas fa-fw fa-user"></i>
-                    <span>User</span></a>
+                    <span>User</span>
+                </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="../Genres/Genre.php">
                     <i class="fas fa-fw fa-swatchbook"></i>
-                    <span>Genres</span></a>
+                    <span>Genres</span>
+                </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="../Format/Format.php">
                     <i class="fas fa-fw fa-align-left"></i>
-                    <span>Formats</span></a>
+                    <span>Formats</span>
+                </a>
             </li>
-
             <li class="nav-item">
                 <a class="nav-link" href="../../Admin/ConfirmEmprunt/Comfirmemprunt.php">
                     <i class="fas fa-fw fa-align-left"></i>
-                    <span>Confirm Emprunt</span></a>
+                    <span>Confirm Emprunt</span>
+                </a>
             </li>
         </ul>
         <!-- End of Sidebar -->
@@ -144,6 +190,10 @@ if ($result_admin_info && mysqli_num_rows($result_admin_info) > 0) {
 
                 <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
 
                     <!-- Topbar Search -->
                     <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">

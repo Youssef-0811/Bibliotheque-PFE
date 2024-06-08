@@ -37,7 +37,6 @@ if ($result_fetch_users && mysqli_num_rows($result_fetch_users) > 0) {
         // Output user data and edit/delete buttons
         echo "<td>";
         echo "<button class='btn btn-danger' onclick='openDeleteUserModal(\"" . $row['Nom'] . " " . $row['Prenom'] . "\")'>Delete</button>";
-        echo "<button class='btn btn-warning' style='margin-left: 10px;' onclick='openEditUserModal(" . $row['ID'] . ", \"" . $row['Nom'] . "\", \"" . $row['Prenom'] . "\", \"" . $row['Email'] . "\", \"" . $row['Date_naissance'] . "\", \"" . $row['Filiere'] . "\")'>Edit</button>";
         echo "</td>";
 
 
