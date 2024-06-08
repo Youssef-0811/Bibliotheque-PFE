@@ -45,7 +45,7 @@ $nr_of_rows = mysqli_num_rows($records);
 $pages = ceil($nr_of_rows / $row_per_page);
 
 $start = max(0, $nr_of_rows - 8);
-$sql = "SELECT * FROM livres LIMIT $start, $row_per_page";
+$sql = "SELECT * FROM livres JOIN format ON livres.Format_Id = format.Id LIMIT $start, $row_per_page";
 $result = mysqli_query($conn, $sql);
 
 //importer les 8 derniers auteurs dans la base
@@ -76,12 +76,20 @@ $resulta = mysqli_query($conn, $sqla);
                     EXPLOREZ NOTRE VASTE COLLECTION DE LIVRES, REVUES ET ARCHIVES NUMÉRIQUES, ET IMMERGEZ-VOUS DANS LA RICHE TAPISSERIE DE LITTERATURE ET DE CONNAISSANCES.
                 </p>
                 <div class="button-container">
-                    <a class="explore-button" href="#">
-                        Explore Library
+                    <a class="explore-button" href="/index.php">
+                        Explorer Bibliothèque
                     </a>
-                    <a class="join-button" href="#">
-                        Join Now
+                    <?php  if (isset($_SESSION['user_id'])) {?>
+                        <a class="join-button" href="#">
+                        'vous etes inscrit'
                     </a>
+                    <?php } else { ?>
+                        <a class="join-button" href="/Login/User/Register.php">
+                        inscrit Maitenant
+                    </a>
+<?php } ?>
+
+                    
                 </div>
             </div>
         </div>
@@ -153,51 +161,42 @@ $resulta = mysqli_query($conn, $sqla);
 
         <!--About-->
 
-        <div class="about">
+        <section class="About">
+  <div class="text-content">
+    <h2 class="title">About Our Bibliothèque</h2>
+    <p class="description">
+    <b>Bienvenue à la Bibliothèque online</b> <br>
 
-            <div class="about_image">
-                <img src="images/about.png">
-            </div>
-            <div class="about_tag">
-                <h1>Apropos de nous</h1>
-                <p>
-                    <b>Bienvenue à la Bibliothèque online</b> <br>
+Dans un coin paisible de la ville, se trouve un lieu enchanté où les mots prennent vie et les esprits s'évadent : la <b>Bibliothèque ONLINE</b>. Au cœur de cette oasis littéraire, un service d'emprunt de livres vous attend, ouvert à tous les avides de découvertes et de voyages au-delà des pages.
 
-                    Dans un coin paisible de la ville, se trouve un lieu enchanté où les mots prennent vie et les esprits s'évadent : la <b>Bibliothèque ONLINE</b>. Au cœur de cette oasis littéraire, un service d'emprunt de livres vous attend, ouvert à tous les avides de découvertes et de voyages au-delà des pages.
+Plongez dans un monde de possibilités infinies où chaque rayonnage recèle des trésors à découvrir. Notre système d'emprunt simple et convivial vous permet de choisir parmi une vaste sélection d'œuvres, des classiques intemporels aux nouveautés palpitantes.
 
-                    Plongez dans un monde de possibilités infinies où chaque rayonnage recèle des trésors à découvrir. Notre système d'emprunt simple et convivial vous permet de choisir parmi une vaste sélection d'œuvres, des classiques intemporels aux nouveautés palpitantes.
+Comment ça fonctionne ? C'est facile ! Il vous suffit de vous inscrire en tant que membre, et le monde des mots s'ouvre à vous. Parcourez les étagères, laissez-vous envoûter par les résumés alléchants et les couvertures intrigantes, puis sélectionnez les joyaux littéraires qui vous appellent.
+    </p>
+    
+  </div>
+  <div class="image-container">
+    <img src="/images/about.png" class="responsive-image" />
+  </div>
+</section>
 
-                    Comment ça fonctionne ? C'est facile ! Il vous suffit de vous inscrire en tant que membre, et le monde des mots s'ouvre à vous. Parcourez les étagères, laissez-vous envoûter par les résumés alléchants et les couvertures intrigantes, puis sélectionnez les joyaux littéraires qui vous appellent.
-
-                    Une fois votre choix fait, présentez-vous au comptoir de prêt, où notre équipe chaleureuse et compétente vous accueillera avec le sourire. Ils vous aideront à finaliser votre emprunt et répondront à toutes vos questions avec plaisir.
-
-                    Que vous soyez un voyageur chevronné à travers les mondes imaginaires, un explorateur des mystères du passé ou un aventurier à la recherche de connaissances nouvelles,<b>La Bibliothèque ONLINE</b> est votre partenaire idéal dans cette quête infinie de savoir et de divertissement.
-
-                    Rejoignez-nous dès aujourd'hui et laissez-vous emporter par la magie des livres à la <b>Bibliothèque ONLINE</b> .
-                </p>
-                <a href="#" class="about_btn">Learn More</a>
-            </div>
-
-        </div>
 
 
         <div class="arrivals py-8">
             <h2 class="text-2xl font-bold text-center mb-8">Nos meilleurs livres</h2>
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 <?php while ($ligne = mysqli_fetch_array($result)) { ?>
-                    <div class="card bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
+                    <div class="card bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 rounded">
                         <div class="relative h-64 overflow-hidden rounded-t-lg">
                             <img src="data:image/jpeg;base64,<?php echo base64_encode($ligne['Image']); ?>" alt="Book cover" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300" />
                             <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                            <div class="absolute bottom-4 left-4 text-white">
-                                <h3 class="title1"><?php echo $ligne['Titre']; ?></h3>
-                                <p class="category1"><?php echo $ligne['Format_Id']; ?></p>
-                            </div>
+                            
                         </div>
                         <div class="p-6">
-                            <p class="resume1">
-                                <?php echo $ligne['Resume']; ?>
-                            </p>
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <h3 class="title1"><?php echo $ligne['Titre']; ?></h3>
+                                <p class="category1">Categorie:<?php echo $ligne['Nom']; ?></p>
+                            </div>
                             <form action="page-info.php" method="post" class="form1">
                                 <input type="hidden" name="id-livre" value="<?php echo $ligne['Numero']; ?>">
                                 <button type="submit" name="submitLiv" class="button1">

@@ -133,7 +133,7 @@
     }
 
     .other-books img {
-      width: 100%;
+      width: max-content;
       height: 200px;
       object-fit: cover;
       border-radius: 10px;
@@ -290,26 +290,28 @@
           // End of reviews check
           ?>
 
-          <?php if ($resultOtherBooks && mysqli_num_rows($resultOtherBooks) > 0) { ?>
+<?php if ($resultOtherBooks && mysqli_num_rows($resultOtherBooks) > 0) { ?>
             <div class="other-books">
-              <h4 class="section-title">More Books by This Author</h4>
+              <h4 class="section-title text-center mb-4">More Books by This Author</h4>
               <div class="row">
                 <?php while ($otherBook = mysqli_fetch_assoc($resultOtherBooks)) { ?>
-                  <div class="col-md-3">
-                    <div class="book-card">
-                      <img src="data:image/jpeg;base64,<?php echo base64_encode($otherBook['Image']); ?>" alt="Other Book Image" class="img-fluid">
-                      <h5 class="mt-2 book-title"><?php echo $otherBook['Titre']; ?></h5>
-                      <form action="page-info.php" method="post" class="form1">
+                  <div class="col-6 col-md-3 mb-4">
+                    <div class="book-card bg-white shadow rounded-lg pt-4 pb-4 pr-2 pl-2 h-100 flex flex-col items-center">
+                      <div class="image-container w-full h-48 overflow-hidden rounded-md mb-2">
+                        <img src="data:image/jpeg;base64,<?php echo base64_encode($otherBook['Image']); ?>" alt="Other Book Image" class="w-full h-full object-cover" />
+                      </div>
+                      <h5 class="mt-2 book-title text-center"><?php echo $otherBook['Titre']; ?></h5>
+                      <form action="page-info.php" method="post" class="form1 mt-2">
                         <input type="hidden" name="id-livre" value="<?php echo $otherBook['Numero']; ?>">
-                        <button type="submit" name="submitLiv" class="button " style="background-color: gray; font-size:smaller; padding: 5px 5px;">Learn More</button>
-
+                        <button type="submit" name="submitLiv" class="button bg-gray-500 text-white text-sm py-1 px-2 rounded">Learn More</button>
                       </form>
                     </div>
                   </div>
                 <?php } ?>
               </div>
             </div>
-          <?php } ?>
+<?php } ?>
+
 
         </div>
       </div>
@@ -322,26 +324,25 @@
 
   <?php
   // Fetch 8 random books
-  $sqlRandomBooks = "SELECT * FROM livres ORDER BY RAND() LIMIT 8";
+  $sqlRandomBooks = "SELECT * FROM livres  JOIN format ON livres.Format_Id = format.Id ORDER BY RAND() LIMIT 8";
   $resultRandomBooks = mysqli_query($conn, $sqlRandomBooks);
   ?>
   <div class="arrivals py-8 px-4" style="padding-left: 50px; padding-right: 50px; overflow-x: auto; white-space: nowrap;">
     <div class="grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4" style="display: inline-flex;"> <!-- Changed display to inline-flex and set gap to 5px -->
       <?php while ($randomBook = mysqli_fetch_assoc($resultRandomBooks)) { ?>
         <div class="card" style="display: inline-block; flex: 0,0,0;"> <!-- Removed flex: 0 0 auto -->
-          <div class="card bg-gray-100 rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300" style="height: 300px; width: 200px; background-color: #F3F4F6;"> <!-- Adjusted height and width, added background color -->
+          <div class="card bg-gray-100 rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300" style="height: 450px; width: 200px; background-color: #F3F4F6;"> <!-- Adjusted height and width, added background color -->
             <div class="relative h-40 overflow-hidden rounded-t-lg bg-gray-200"> <!-- Adjusted height, added background color -->
-              <img src="data:image/jpeg;base64,<?php echo base64_encode($randomBook['Image']); ?>" alt="Book cover" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300" />
+              <img src="data:image/jpeg;base64,<?php echo base64_encode($randomBook['Image']); ?>" alt="Book cover" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300" style="width: 100%; height: 300px" />
               <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
               <div class="absolute bottom-2 left-2 text-white"> <!-- Adjusted bottom padding -->
-                <h3 class="title1 text-sm"><?php echo $randomBook['Titre']; ?></h3> <!-- Adjusted text size -->
-                <p class="category1 text-xs"><?php echo $randomBook['Format_Id']; ?></p> <!-- Adjusted text size -->
+               
               </div>
             </div>
             <div class="p-4"> <!-- Adjusted padding -->
-              <p class="resume1 text-xs"> <!-- Adjusted text size -->
-                <?php echo $randomBook['Resume']; ?>
-              </p>
+            <h3 class="title1 text-sm"><?php echo $randomBook['Titre']; ?></h3> <!-- Adjusted text size -->
+            <p class="category1 text-xs"><?php echo $randomBook['Nom']; ?></p> <!-- Adjusted text size -->
+
               <form action="page-info.php" method="post" class="form1">
                 <input type="hidden" name="id-livre" value="<?php echo $randomBook['Numero']; ?>">
                 <button type="submit" name="submitLiv" class="button " style="background-color: gray; font-size:smaller; padding: 5px 5px;">Learn More</button>
