@@ -287,7 +287,10 @@ if ($result_admin_info && mysqli_num_rows($result_admin_info) > 0) {
                             <div class="card-body">
                                 <div class="table-responsive" style="max-height: 220px; overflow-y: auto;">
                                     <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
-
+                                        <!-- Search input for Nom Prenom -->
+                                        <div class="mb-3">
+                                            <input type="text" class="form-control" id="searchInput" placeholder="Recherche par Nom Prenom">
+                                        </div>
                                         <div class="row">
                                             <div class="col-sm-12">
                                                 <table class="table table-bordered dataTable" id="dataTable" role="grid" aria-describedby="dataTable_info" style="width: 100%;" width="100%" cellspacing="0">
@@ -298,7 +301,6 @@ if ($result_admin_info && mysqli_num_rows($result_admin_info) > 0) {
                                                             <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 125.45px;" aria-label="Position: activate to sort column ascending">Filiere</th>
                                                             <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 125.45px;" aria-label="Position: activate to sort column ascending">Livres Emprunter</th>
                                                             <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 125.45px;" aria-label="Position: activate to sort column ascending">Actions</th>
-
                                                         </tr>
                                                     </thead>
                                                     <tbody id="documents">
@@ -314,6 +316,35 @@ if ($result_admin_info && mysqli_num_rows($result_admin_info) > 0) {
                             </div>
                         </div>
                     </div>
+
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            // Get the input field and table body
+                            const searchInput = document.getElementById('searchInput');
+                            const tableBody = document.getElementById('documents');
+
+                            // Event listener for the input field
+                            searchInput.addEventListener('input', function() {
+                                const searchText = this.value.toLowerCase();
+                                const rows = tableBody.getElementsByTagName('tr');
+
+                                // Loop through all table rows and hide those that don't match the search query
+                                for (let i = 0; i < rows.length; i++) {
+                                    const row = rows[i];
+                                    const cells = row.getElementsByTagName('td');
+                                    const nameCell = cells[0]; // Index 0 is the "Nom Prenom" column
+
+                                    // Check if cell text contains search query for Nom Prenom
+                                    if (nameCell.innerText.toLowerCase().includes(searchText)) {
+                                        row.style.display = '';
+                                    } else {
+                                        row.style.display = 'none';
+                                    }
+                                }
+                            });
+                        });
+                    </script>
+
 
 
 

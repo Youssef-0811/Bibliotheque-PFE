@@ -234,7 +234,6 @@ if ($result_admin_info && mysqli_num_rows($result_admin_info) > 0) {
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
                     <!-- Page Heading -->
                     <div class="card border-left-primary shadow mb-4">
                         <div class="card-header py-3">
@@ -242,19 +241,22 @@ if ($result_admin_info && mysqli_num_rows($result_admin_info) > 0) {
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
+                                <!-- Search input -->
+                                <div class="mb-3">
+                                    <input type="text" class="form-control" id="searchInput" placeholder="Recherche par nom ou par Id Emprunt">
+                                </div>
                                 <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
-
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <table class="table table-bordered dataTable" id="dataTable" role="grid" aria-describedby="dataTable_info" style="width: 100%;" width="100%" cellspacing="0">
                                                 <thead>
                                                     <tr role="row">
+                                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 275.45px;" aria-label="Position: activate to sort column ascending">Id Emprunt</th>
                                                         <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 275.45px;" aria-label="Position: activate to sort column ascending">Nom Prenom</th>
                                                         <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 275.45px;" aria-label="Position: activate to sort column ascending">Titre du Livre</th>
                                                         <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 275.45px;" aria-label="Position: activate to sort column ascending">date_d'emprunt</th>
                                                         <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 275.45px;" aria-label="Position: activate to sort column ascending">date de retour</th>
                                                         <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 275.45px;" aria-label="Position: activate to sort column ascending">Action</th>
-
                                                     </tr>
                                                 </thead>
                                                 <tbody id="formats">
@@ -269,15 +271,48 @@ if ($result_admin_info && mysqli_num_rows($result_admin_info) > 0) {
                                 </div>
                             </div>
                         </div>
-
-
                     </div>
-
-                    <!-- /.container-fluid -->
-
                 </div>
-                <!-- End of Main Content -->
 
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        // Get the input field and table body
+                        const searchInput = document.getElementById('searchInput');
+                        const tableBody = document.getElementById('formats');
+
+                        // Event listener for the input field
+                        searchInput.addEventListener('input', function() {
+                            const searchText = this.value.toLowerCase();
+                            const rows = tableBody.getElementsByTagName('tr');
+
+                            // Loop through all table rows and hide those that don't match the search query
+                            for (let i = 0; i < rows.length; i++) {
+                                const row = rows[i];
+                                const cells = row.getElementsByTagName('td');
+                                let found = false;
+
+                                // Loop through all table cells in current row
+                                for (let j = 0; j < cells.length; j++) {
+                                    const cell = cells[j];
+                                    const text = cell.innerText.toLowerCase();
+
+                                    // Check if cell text contains search query
+                                    if (text.includes(searchText)) {
+                                        found = true;
+                                        break;
+                                    }
+                                }
+
+                                // Toggle row visibility based on search result
+                                if (found) {
+                                    row.style.display = '';
+                                } else {
+                                    row.style.display = 'none';
+                                }
+                            }
+                        });
+                    });
+                </script>
 
             </div>
             <!-- End of Content Wrapper -->

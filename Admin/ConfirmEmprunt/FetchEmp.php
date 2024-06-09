@@ -22,6 +22,7 @@ if ($query_result) {
         while ($row = $query_result->fetch_assoc()) {
             // Start building the table row for each entry
             $result .= "<tr>";
+            $result .= "<td>" . $row["id_emprunt"] . "</td>";
             $result .= "<td>" . $row["Nom"] . " " . $row["Prenom"] . "</td>";
             $result .= "<td>" . $row["Titre"] . "</td>"; // Display the Titre instead of numero_livre_emprunter
             $result .= "<td>" . $row["date_emprunt"] . "</td>";

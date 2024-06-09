@@ -13,25 +13,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $releaseDate = $_POST["releaseBook"];
     $isbn = $_POST["isbnBook"];
     $resume = $_POST["resumeBook"];
-
-    // Debugging: Print the received genre ID
-
-
-    echo "Received format ID: " . $formatId;
-
+    $availability = $_POST["availabilityBook"]; // New field: Disponibilité
 
     // Upload image
     $imageTmp = $_FILES['image']['tmp_name'];
-    $imageData = file_get_contents($imageTmp); // No need for addslashes here
+    $imageData = file_get_contents($imageTmp);
     $imageType = $_FILES['image']['type'];
 
     // Prepare SQL statement to insert data into livres table
-    $sql = "INSERT INTO livres (Titre, auteur_id, Genre_Id, Format_Id, Nbr_pages, Parution, ISBN, Resume, Image, ImageType)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO livres (Titre, auteur_id, Genre_Id, Format_Id, Nbr_pages, Parution, ISBN, Resume, Image, ImageType, Disponible)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     // Prepare and bind parameters
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("siisiiisss", $title, $authorId, $genreId, $formatId, $countPages, $releaseDate, $isbn, $resume, $imageData, $imageType);
+    $stmt->bind_param("siisiiisssi", $title, $authorId, $genreId, $formatId, $countPages, $releaseDate, $isbn, $resume, $imageData, $imageType, $availability);
 
     // Execute the query
     if ($stmt->execute()) {
@@ -40,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit;
     } else {
         // Error handling
-        echo "Error inserting data: " . $stmt->error; // Output detailed error message
+        echo "Error inserting data: " . $stmt->error;
     }
 
     // Close statement and connection

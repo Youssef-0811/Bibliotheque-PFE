@@ -3,7 +3,7 @@ include("../../DataBase.php");
 
 // Define the openEditModal function
 echo "<script>
-    function openEditModal(Numero, Titre, Auteur_Id, Genre_Id, Format_Id, Nbr_pages, Parution, ISBN, Resume, currentImageUrl) {
+    function openEditModal(Numero, Titre, Auteur_Id, Genre_Id, Format_Id, Nbr_pages, Parution, ISBN, Resume, currentImageUrl, Disponible) {
         // Set values for edit form fields
         document.getElementById('editBookId').value = Numero;
         document.getElementById('editTitre').value = Titre;
@@ -14,6 +14,7 @@ echo "<script>
         document.getElementById('editParution').value = Parution;
         document.getElementById('editISBN').value = ISBN;
         document.getElementById('editResume').value = Resume;
+        document.getElementById('editDisponibilite').value = Disponible;
 
         // Set current image for the book
         document.getElementById('currentImage').src = currentImageUrl;
@@ -35,9 +36,9 @@ echo "<script>
     }
 </script>";
 
-// SQL query to fetch data from the "livres" table along with genre and format names
+// SQL query to fetch data from the "livres" table along with genre, format, and disponibilité
 $sql = "SELECT livres.Numero, livres.Titre, livres.ISBN, livres.Parution, livres.Image, livres.ImageType, livres.Auteur_Id, 
-               livres.Genre_Id, livres.Format_Id, livres.Nbr_pages, livres.Resume, auteurs.Nom AS AuteurNom, 
+               livres.Genre_Id, livres.Format_Id, livres.Nbr_pages, livres.Disponible, livres.Resume, auteurs.Nom AS AuteurNom, 
                genre.Nom AS GenreNom, format.Nom AS FormatNom
         FROM livres
         INNER JOIN auteurs ON livres.Auteur_Id = auteurs.Id
@@ -59,6 +60,9 @@ if ($result && $result->num_rows > 0) {
             $image = "https://via.placeholder.com/150";
         }
 
+        // Fetch the "Disponible" field from the database
+        $disponible = $row['Disponible'];
+
         echo "<tr>";
         echo "<td><img src='" . $image . "' width='100'></td>";
         echo "<td>" . $row['Titre'] . "</td>";
@@ -69,7 +73,7 @@ if ($result && $result->num_rows > 0) {
         // Add delete button with onclick event calling showDeleteModal() function
         echo "<button class='btn btn-danger' style='margin-right: 10px' onclick='showDeleteModal(" . $row['Numero'] . ", \"" . addslashes($row['Titre']) . "\")'>Delete</button>";
         // Add edit button with onclick event calling openEditModal() function
-        echo "<button class='btn btn-primary' onclick='openEditModal(\"" . $row['Numero'] . "\", \"" . $row['Titre'] . "\", \"" . $row['Auteur_Id'] . "\", \"" . $row['Genre_Id'] . "\", \"" . $row['Format_Id'] . "\", \"" . $row['Nbr_pages'] . "\", \"" . $row['Parution'] . "\", \"" . $row['ISBN'] . "\", \"" . $row['Resume'] . "\", \"" . $image . "\")'>Edit</button></td>";
+        echo "<button class='btn btn-primary' onclick='openEditModal(\"" . $row['Numero'] . "\", \"" . $row['Titre'] . "\", \"" . $row['Auteur_Id'] . "\", \"" . $row['Genre_Id'] . "\", \"" . $row['Format_Id'] . "\", \"" . $row['Nbr_pages'] . "\", \"" . $row['Parution'] . "\", \"" . $row['ISBN'] . "\", \"" . $row['Resume'] . "\", \"" . $image . "\", \"" . $disponible . "\")'>Edit</button></td>";
         echo "</tr>";
     }
 } else {

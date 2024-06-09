@@ -218,14 +218,14 @@
         <div class="col-lg-6">
           <div class="author-info">
             <h2 style="color: black;"><?php echo $ligne['Titre']; ?></h2>
-            <h5 style="color: #888;"><?php echo $ligneaut['auteur_nom']; ?> 
-            <form action="testpage.php" method="post">
-                                <input type="hidden" name="idauteur" value="<?php echo $ligneaut['Id_Auteur']; ?>">
-                                <input class="button2" type="submit" name="submitauteur" value="voir">
-                            </form>
+            <h5 style="color: #888;"><?php echo $ligneaut['auteur_nom']; ?>
+              <form action="testpage.php" method="post">
+                <input type="hidden" name="idauteur" value="<?php echo $ligneaut['Id_Auteur']; ?>">
+                <button type="submit" name="submitauteur" class="button bg-gray-500 text-white text-sm py-1 px-2 rounded">Learn More</button>
+              </form>
 
 
-          </h3>
+              </h3>
           </div>
           <ul class="book-info">
             <li><span class="info-label" style="color: black;">Status:</span> <?php echo ($ligneaut['livre_disponible'] == 1 ? 'Available' : 'Not available'); ?></li>
@@ -298,7 +298,7 @@
           // End of reviews check
           ?>
 
-<?php if ($resultOtherBooks && mysqli_num_rows($resultOtherBooks) > 0) { ?>
+          <?php if ($resultOtherBooks && mysqli_num_rows($resultOtherBooks) > 0) { ?>
             <div class="other-books">
               <h4 class="section-title text-center mb-4">More Books by This Author</h4>
               <div class="row">
@@ -318,7 +318,7 @@
                 <?php } ?>
               </div>
             </div>
-<?php } ?>
+          <?php } ?>
 
 
         </div>
@@ -344,12 +344,12 @@
               <img src="data:image/jpeg;base64,<?php echo base64_encode($randomBook['Image']); ?>" alt="Book cover" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300" style="width: 100%; height: 300px" />
               <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
               <div class="absolute bottom-2 left-2 text-white"> <!-- Adjusted bottom padding -->
-               
+
               </div>
             </div>
             <div class="p-4"> <!-- Adjusted padding -->
-            <h3 class="title1 text-sm"><?php echo $randomBook['Titre']; ?></h3> <!-- Adjusted text size -->
-            <p class="category1 text-xs"><?php echo $randomBook['Nom']; ?></p> <!-- Adjusted text size -->
+              <h3 class="title1 text-sm"><?php echo $randomBook['Titre']; ?></h3> <!-- Adjusted text size -->
+              <p class="category1 text-xs"><?php echo $randomBook['Nom']; ?></p> <!-- Adjusted text size -->
 
               <form action="page-info.php" method="post" class="form1">
                 <input type="hidden" name="id-livre" value="<?php echo $randomBook['Numero']; ?>">

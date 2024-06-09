@@ -241,6 +241,10 @@ if ($result_admin_info && mysqli_num_rows($result_admin_info) > 0) {
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
+                                    <!-- Search input for titre -->
+                                    <div class="mb-3">
+                                        <input type="text" class="form-control" id="searchInput" placeholder="Recherche par titre">
+                                    </div>
                                     <table class="table table-bordered dataTable" id="dataTable" role="grid" aria-describedby="dataTable_info" style="width: 100%;" width="100%" cellspacing="0">
                                         <thead>
                                             <tr role="row">
@@ -265,6 +269,35 @@ if ($result_admin_info && mysqli_num_rows($result_admin_info) > 0) {
                         </div>
                     </div>
 
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            // Get the input field and table body
+                            const searchInput = document.getElementById('searchInput');
+                            const tableBody = document.getElementById('books');
+
+                            // Event listener for the input field
+                            searchInput.addEventListener('input', function() {
+                                const searchText = this.value.toLowerCase();
+                                const rows = tableBody.getElementsByTagName('tr');
+
+                                // Loop through all table rows and hide those that don't match the search query
+                                for (let i = 0; i < rows.length; i++) {
+                                    const row = rows[i];
+                                    const cells = row.getElementsByTagName('td');
+                                    const titleCell = cells[1]; // Index 1 is the "Titre" column
+
+                                    // Check if cell text contains search query
+                                    if (titleCell.innerText.toLowerCase().includes(searchText)) {
+                                        row.style.display = '';
+                                    } else {
+                                        row.style.display = 'none';
+                                    }
+                                }
+                            });
+                        });
+                    </script>
+
+
                     <!-- Modal for delete confirmation -->
                     <div id="deleteModal" class="modal">
                         <div class="modal-content">
@@ -287,6 +320,13 @@ if ($result_admin_info && mysqli_num_rows($result_admin_info) > 0) {
                                 <div class="form-group">
                                     <label for="titleBook">Titre</label>
                                     <input required type="text" class="form-control" id="titleBook" name="titleBook">
+                                </div>
+                                <div class="form-group">
+                                    <label for="availabilityBook">Disponibilité</label>
+                                    <select class="form-control" id="availabilityBook" name="availabilityBook">
+                                        <option value="1">Oui</option>
+                                        <option value="0">Non</option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="authorBook">Auteur</label>
@@ -424,7 +464,7 @@ if ($result_admin_info && mysqli_num_rows($result_admin_info) > 0) {
     <!-- Edit Modal -->
     <div id="editModal" class="modal">
         <div class="modal-content" style="margin: 5% auto;">
-            <span class="close">&times;</span>
+            <span id="editBookClose" class="close">&times;</span>
             <h2>Edit Book</h2>
             <form id="editForm" action="EditBook.php" method="post" enctype="multipart/form-data">
                 <!-- Hidden input for book ID -->
@@ -446,6 +486,18 @@ if ($result_admin_info && mysqli_num_rows($result_admin_info) > 0) {
                 <div class="form-group">
                     <label for="editTitre">Titre</label>
                     <input type="text" class="form-control" id="editTitre" name="editTitre">
+                </div>
+                <!-- Disponibilité -->
+                <div class="form-group">
+                    <label for="editDisponibilite">Disponibilité</label>
+                    <select class="form-control" id="editDisponibilite" name="editDisponibilite">
+                        <?php
+                        // Current disponibilité value (1 for oui, 0 for non)
+                        $currentDisponibilite = $row['Disponible'];
+                        ?>
+                        <option value="1" <?php if ($currentDisponibilite == 1) echo "selected"; ?>>Oui</option>
+                        <option value="0" <?php if ($currentDisponibilite == 0) echo "selected"; ?>>Non</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="editAuteurId">Auteur</label>

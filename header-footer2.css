@@ -79,14 +79,13 @@ header nav .logo img{
 
 header nav ul{
   list-style: none;
-  gap: 5rem;
+  gap: 3rem;
   display: flex;
   
 }
 
 header nav li{
   display: inline-block;
-  padding: 0 10px;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   margin: 0 10px;
   padding-top: 10px;

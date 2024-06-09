@@ -246,6 +246,10 @@ if ($result_admin_info && mysqli_num_rows($result_admin_info) > 0) {
                                                             $result = $conn->query($sql);
 
                                                             echo ($result && $result->num_rows > 3) ? 'scrollable-table' : ''; ?>" <?php echo ($result && $result->num_rows > 3) ? 'style="max-height: 400px;"' : ''; ?>>
+                                <!-- Search input for Prénom and Nom -->
+                                <div class="mb-3">
+                                    <input type="text" class="form-control" id="searchInput" placeholder="Recherche par Prénom ou Nom">
+                                </div>
                                 <table class="table table-bordered dataTable" id="dataTable" role="grid" aria-describedby="dataTable_info" style="width: 100%;" width="100%" cellspacing="0">
                                     <thead>
                                         <tr role="row">
@@ -263,13 +267,41 @@ if ($result_admin_info && mysqli_num_rows($result_admin_info) > 0) {
                                         include("FetchA.php");
                                         ?>
                                     </tbody>
-
-
                                 </table>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        // Get the input field and table body
+                        const searchInput = document.getElementById('searchInput');
+                        const tableBody = document.getElementById('authors');
+
+                        // Event listener for the input field
+                        searchInput.addEventListener('input', function() {
+                            const searchText = this.value.toLowerCase();
+                            const rows = tableBody.getElementsByTagName('tr');
+
+                            // Loop through all table rows and hide those that don't match the search query
+                            for (let i = 0; i < rows.length; i++) {
+                                const row = rows[i];
+                                const cells = row.getElementsByTagName('td');
+                                const firstNameCell = cells[1]; // Index 1 is the "Prénom" column
+                                const lastNameCell = cells[2]; // Index 2 is the "Nom" column
+
+                                // Check if cell text contains search query for Prénom or Nom
+                                if (firstNameCell.innerText.toLowerCase().includes(searchText) || lastNameCell.innerText.toLowerCase().includes(searchText)) {
+                                    row.style.display = '';
+                                } else {
+                                    row.style.display = 'none';
+                                }
+                            }
+                        });
+                    });
+                </script>
+
 
 
                 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
