@@ -45,9 +45,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
 
                 // Prepare and insert the notification
                 $notification_message = "Pour confirmer votre emprunt donnez ce code a votre Bibliothéquere: $emprunt_id";
-                $notification_sql = "INSERT INTO notifications (user_id, message, Status) VALUES (?, ?, 0)";
+                $notification_sql = `INSERT INTO notifications (user_id, message, Status) VALUES (?, ?, ?)`;
                 $notification_stmt = $conn->prepare($notification_sql);
-                $notification_stmt->bind_param('is', $id_client, $notification_message);
+                $notification_stmt->bind_param('is', $id_client, $notification_message,0);
                 $notification_stmt->execute();
                 $notification_stmt->close();
 

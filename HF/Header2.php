@@ -68,6 +68,15 @@
     <li><a href="index.php">Bibliotheque</a></li>
     <li><a href="#">Reglement</a></li>
     <li><a href="#contact">Contact</a></li>
+  <?php  if (isset($_SESSION['user_id'])) {?> 
+    <li>
+    <a href="../Login/User/logout.php">Déconnexion</a>
+          </li>
+   
+    <?php }else{ ?>
+ <li><a href="/Login/User/userLogin.php">login</a></li>
+ <?php } ?>
+
   </ul>
 
   <script>

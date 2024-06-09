@@ -80,8 +80,8 @@ $resulta = mysqli_query($conn, $sqla);
                         Explorer Bibliothèque
                     </a>
                     <?php  if (isset($_SESSION['user_id'])) {?>
-                        <a class="join-button" href="#">
-                        'vous etes inscrit'
+                        <a class="join-button" href="/User_Compte/Edit_Infos/editInfos.php">
+                        <img src="../images/icons/Style=Solid (1).png" alt="Home icon"> Compte</a>
                     </a>
                     <?php } else { ?>
                         <a class="join-button" href="/Login/User/Register.php">

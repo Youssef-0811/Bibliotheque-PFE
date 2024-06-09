@@ -590,7 +590,8 @@ padding-top: 5rem;
 @media (max-width: 383px) {
    .arrivals .arrivals_box {
      grid-template-columns: 1fr;
-     justify-content: center;
+   justify-content: center;
+   grid:none;
    }
    .RechercheResult{
       grid-column:auto;
