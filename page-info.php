@@ -180,6 +180,7 @@
                         auteurs.Nom AS auteur_nom,
                         auteurs.Bio AS auteur_bio,
                         format.Nom AS format_nom,
+                        livres.Auteur_Id AS Id_Auteur,
                         livres.Disponible AS livre_disponible,
                         book_review.id_client AS reviewer_id,
                         book_review.review AS review_comment,
@@ -217,7 +218,14 @@
         <div class="col-lg-6">
           <div class="author-info">
             <h2 style="color: black;"><?php echo $ligne['Titre']; ?></h2>
-            <h5 style="color: #888;"><?php echo $ligneaut['auteur_nom']; ?></h3>
+            <h5 style="color: #888;"><?php echo $ligneaut['auteur_nom']; ?> 
+            <form action="testpage.php" method="post">
+                                <input type="hidden" name="idauteur" value="<?php echo $ligneaut['Id_Auteur']; ?>">
+                                <input class="button2" type="submit" name="submitauteur" value="voir">
+                            </form>
+
+
+          </h3>
           </div>
           <ul class="book-info">
             <li><span class="info-label" style="color: black;">Status:</span> <?php echo ($ligneaut['livre_disponible'] == 1 ? 'Available' : 'Not available'); ?></li>

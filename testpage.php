@@ -12,11 +12,10 @@
             font-family: sans-serif;
         }
 
-        .container {
-            display: flex;
-            flex-wrap: wrap;
+        .containerAuteur {
             gap: 16px;
             padding: 24px;
+            margin-top: 10rem;
         }
 
         .profile-image {
@@ -35,7 +34,8 @@
 
         .profile-details {
             flex: 1;
-            display: grid;
+            display: flex;
+            flex-direction: column;
             gap: 16px;
         }
 
@@ -55,7 +55,6 @@
             background-color: #f3f4f6;
             padding: 32px;
             border-radius: 8px;
-            width: 1200px;
         }
 
         .bio-section h2,
@@ -72,7 +71,7 @@
             min-width: 200px;
             flex: 0 0 auto;
             border: 1px solid #ccc;
-            /* Added border */
+
         }
 
         .book-card img {
@@ -95,15 +94,24 @@
         }
 
         .noBook {
-            color: #ff0000;
-            /* Red color */
+            color: #ff0000; 
             font-size: 18px;
-            /* Font size */
             font-style: italic;
-            /* Italic font style */
             text-align: center;
-            /* Center alignment */
+           
         }
+        .ContAut{
+            display: flex;
+            flex-direction: row;
+        }
+        .ContAut .ContAut1 {
+            place-self: flex-end;
+        }
+        .ContAut2 img {
+            width: 50rem;
+            height: 10rem;
+        }
+
     </style>
 </head>
 
@@ -153,16 +161,23 @@
     $sqla = "SELECT * FROM auteurs LIMIT $starta, $row_per_page";
     $resulta = mysqli_query($conn, $sqla);
     ?>
-    <div class="container">
+    <div class="containerAuteur">
         <!-- <?php if ($result && mysqli_num_rows($result) > 0) { ?>
     <div class="profile-image">
     <img src="data:image/jpeg;base64,<?php echo base64_encode($ligne['Image']); ?>">
     </div> -->
         <div class="profile-details">
             <div class="profile-header">
+          <div class="ContAut">
+                <div class="ContAut1">
+                 <img src="data:image/jpeg;base64,<?php echo base64_encode($ligne['Image']); ?>">
+                </div>
 
+                <div class="ContAut2">
+            
+            </div>
 
-
+        </div>
                 <h1 style="font-size: 24px; font-weight: bold;"><?php echo $ligne['Nom']; ?></h1>
                 <p style="color: #6b7280;">auteur</p>
                 <div class="profile-info">
@@ -183,6 +198,9 @@
                     </svg>
                     <span>Nationality: American</span>
                 </div>
+            
+
+
             </div>
 
 

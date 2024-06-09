@@ -172,9 +172,10 @@ $result_confirmed = $stmt_confirmed->get_result();
                 <table class="w-full border-collapse border border-gray-200">
                     <thead>
                         <tr class="bg-gray-100 border-b border-gray-200">
-                            <th class="px-4 py-2" style="width: 33.33%;">Book Name</th>
-                            <th class="px-4 py-2" style="width: 33.33%;">Date Borrowed</th>
-                            <th class="px-4 py-2" style="width: 33.33%;">Date Due</th>
+                            <th class="px-4 py-2 text-left" style="width: 25%;">Image</th>
+                            <th class="px-4 py-2 text-left" style="width: 25%">Titre du livre</th>
+                            <th class="px-4 py-2 text-left" style="width: 25%">Date d'emprunt</th>
+                            <th class="px-4 py-2 text-left" style="width: 25%">Date de retour</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -182,12 +183,14 @@ $result_confirmed = $stmt_confirmed->get_result();
                         <?php while ($row = $result_pending->fetch_assoc()) : ?>
                             <?php $book_info = getBookInfo($row['numero_livre_emprunter']); ?>
                             <tr class="border-b border-gray-200">
-                                <td class="px-4 py-2" style="width: 33.33%;">
-                                    <img src="data:image/<?php echo $book_info['ImageType']; ?>;base64,<?php echo base64_encode($book_info['Image']); ?>" alt="<?php echo $book_info['Titre']; ?>" class="w-12 h-12 object-cover rounded-full">
+                            <td class="px-4 py-2"style="width: 25%">
+                            <img src="data:image/<?php echo $book_info['ImageType']; ?>;base64,<?php echo base64_encode($book_info['Image']); ?>" alt="<?php echo $book_info['Titre']; ?>" class="w-12 h-12 object-cover rounded-full">
+                            </td>
+                                <td class="px-4 py-2" style="width: 25%">
                                     <span class="ml-2"><?php echo $book_info['Titre']; ?></span>
                                 </td>
-                                <td class="px-4 py-2" style="width: 33.33%;"><?php echo $row['date_emprunt']; ?></td>
-                                <td class="px-4 py-2" style="width: 33.33%;"><?php echo $row['date_retour']; ?></td>
+                                <td class="px-4 py-2" style="width: 25%"><?php echo $row['date_emprunt']; ?></td>
+                                <td class="px-4 py-2" style="width: 25%"><?php echo $row['date_retour']; ?></td>
                             </tr>
                         <?php endwhile; ?>
                     </tbody>
@@ -203,10 +206,11 @@ $result_confirmed = $stmt_confirmed->get_result();
                 <table class="w-full border-collapse border border-gray-200">
                     <thead>
                         <tr class="bg-gray-100 border-b border-gray-200">
-                            <th class="px-4 py-2 text-left" style="width: 25%;">Book Name</th>
-                            <th class="px-4 py-2 text-left" style="width: 25%;">Date Borrowed</th>
-                            <th class="px-4 py-2 text-left" style="width: 25%;">Date Due</th>
-                            <th class="px-4 py-2 text-left" style="width: 25%; ">Reviews</th>
+                        <th class="px-4 py-2 text-left" style="width: 10%;">Image</th>
+                            <th class="px-4 py-2 text-left" style="width: 10%;" >Titre du livre </th>
+                            <th class="px-4 py-2 text-left" style="width: 10%;" >Date d'emprunt</th>
+                            <th class="px-4 py-2 text-left" style="width: 10%;" >Date de retour</th>
+                            <th class="px-4 py-2 text-left" style="width: 10%;" >Reviews</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -215,13 +219,15 @@ $result_confirmed = $stmt_confirmed->get_result();
                             <?php $book_info = getBookInfo($row['numero_livre_emprunter']); ?>
                             <?php $hasReviewed = hasReviewedBook($user_id, $book_info['Numero']); ?>
                             <tr class="border-b border-gray-200">
-                                <td class="px-4 py-2 text-left w-1/4">
-                                    <img src="data:image/<?php echo $book_info['ImageType']; ?>;base64,<?php echo base64_encode($book_info['Image']); ?>" alt="<?php echo $book_info['Titre']; ?>" class="w-12 h-12 object-cover rounded-full">
+                            <td class="px-4 py-2" style="width: 10%;" >
+                            <img src="data:image/<?php echo $book_info['ImageType']; ?>;base64,<?php echo base64_encode($book_info['Image']); ?>" alt="<?php echo $book_info['Titre']; ?>" class="w-12 h-12 object-cover rounded-full">
+                            </td>
+                                <td class="px-4 py-2 text-left w-1/4" style="width: 10%;" >
                                     <span class="ml-2"><?php echo $book_info['Titre']; ?></span>
                                 </td>
-                                <td class="px-4 py-2 text-left w-1/4"><?php echo $row['date_emprunt']; ?></td>
-                                <td class="px-4 py-2 text-left w-1/4"><?php echo $row['date_retour']; ?></td>
-                                <td class="px-4 py-2 text-left w-1/4">
+                                <td class="px-4 py-2 text-left w-1/4" style="width: 10%;" ><?php echo $row['date_emprunt']; ?></td>
+                                <td class="px-4 py-2 text-left w-1/4" style="width: 10%;" ><?php echo $row['date_retour']; ?></td>
+                                <td class="px-4 py-2 text-left w-1/4" style="width: 10%;" >
                                     <?php if ($hasReviewed) : ?>
                                         <!-- Display existing review with edit option -->
                                         <div id="reviewContainer<?php echo $book_info['Numero']; ?>" class="review-container flex items-center">

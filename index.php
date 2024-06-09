@@ -102,11 +102,25 @@ include('pagination.php');
             // Check if search query is set
             if (isset($_GET['search'])  &&  !empty($_GET['search'])) {
                 $search = $_GET['search'];
-                // Modify your SQL query to search by book title
-                $sql = "SELECT * FROM livres WHERE Titre LIKE '%$search%' ";
+                // search by book title
+                $sql = "SELECT livres.*, auteurs.Nom AS Auteur_Nom,genre.Nom AS Genre_Nom 
+                FROM livres
+                JOIN auteurs ON livres.Auteur_Id = auteurs.Id
+                JOIN genre ON livres.Genre_Id = genre.Id
+                WHERE livres.Titre LIKE '%$search%'
+                OR auteurs.Nom LIKE '%$search%'
+                OR genre.Nom LIKE '%$search%'";
                 $result = mysqli_query($conn, $sql);
+                ?>
+                <div class="RechercheResult"><?php echo  "recherche pour : `" . $_GET['search'] . "`"; ?></div>
+
+
+                <?php
                 // Loop through search results and display
+                
                 while ($ligne = mysqli_fetch_array($result)) { ?>
+
+
 
 
                     <div class="arrivals_card">
@@ -141,8 +155,10 @@ include('pagination.php');
                     JOIN format on format.Id = livres.Format_Id
                     where format.Nom ='$selected_category'";
 
-                    $result = mysqli_query($conn, $sql);
-
+                    $result = mysqli_query($conn, $sql);?>
+                    
+                    <div class="RechercheResult"><?php echo  "Categorie : `" . $_GET['Categorie'] . "`"; ?></div>
+                    <?php
                     while ($ligne = mysqli_fetch_array($result)) { ?>
 
 

@@ -253,6 +253,9 @@ border-radius: 2rem;
 .arrivals_card:hover {
    box-shadow: 0 0 5px rgb(76, 44, 0);
 }
+.RechercheResult{
+   grid-column: 1 / 5;
+}
 
 .arrivals_image {
    width: 150px;
@@ -292,6 +295,7 @@ border-radius: 2rem;
    color: #000;
 }
 
+
 /* About section styles */
 .About {
    display: grid;
@@ -329,6 +333,8 @@ border-radius: 2rem;
      font-size: 2.5rem;
    }
  }
+ /* end About */
+
  
  .description {
    color: #6b7280; /* Equivalent to Tailwind's gray-500 */
@@ -453,6 +459,9 @@ padding-top: 5rem;
      grid-template-columns: repeat(3,1fr);
      justify-content: center;
    }
+   .RechercheResult{
+      grid-column: 1 / 4;
+   }
   
     
     .txt{
@@ -471,6 +480,9 @@ padding-top: 5rem;
      grid-template-columns: repeat(2, 1fr);
      justify-content: center;
      margin: 0 1rem;
+   }
+   .RechercheResult{
+      grid-column: 1 / 3;
    }
    .about_image{
       display: none;
@@ -497,6 +509,7 @@ padding-top: 5rem;
      grid-template-columns: 1fr 1fr;
      justify-content: center;
    }
+
 
    .about_tag{
       font-size: 12px;
@@ -578,6 +591,9 @@ padding-top: 5rem;
    .arrivals .arrivals_box {
      grid-template-columns: 1fr;
      justify-content: center;
+   }
+   .RechercheResult{
+      grid-column:auto;
    }
 
 }
@@ -776,24 +792,12 @@ padding-top: 5rem;
 
 
 
-
-
-
-
-
-
-
      .arrivals2 {
       margin-top: 20px;
-      padding: 100px;
+      padding: 15px;
       text-align: center;
   }
   
-  .arrivals_box {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
-  }
   
   .author-card2 {
       background-color: #f9f9f9;
