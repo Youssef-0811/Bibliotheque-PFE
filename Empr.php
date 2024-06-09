@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
     // Check if the value exists
     if ($count > 0) {
         $message = 'vous avez emprunter ce livre Attender la confirmation de l`emprunt';
-        echo '<script type="text/javascript">window.alert("' . $message . '");</script>';
+        ;
     } else {
         $stmt->close();
         $stmt = $conn->prepare("SELECT COUNT(*) FROM empruntconfirme WHERE numero_livre_emprunter = ? AND id_client = ?");
@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
 
         if ($count > 0) {
             $message = 'vous avez deja emprunter ce livre';
-            echo '<script type="text/javascript">window.alert("' . $message . '");</script>';
+            
         } else {
             $stmt->close();
 
@@ -45,9 +45,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
 
                 // Prepare and insert the notification
                 $notification_message = "Pour confirmer votre emprunt donnez ce code a votre Bibliothéquere: $emprunt_id";
-                $notification_sql = `INSERT INTO notifications (user_id, message, Status) VALUES (?, ?, ?)`;
+                $notification_sql = "INSERT INTO notifications (user_id, message, Status) VALUES (?, ?, 0)";
                 $notification_stmt = $conn->prepare($notification_sql);
-                $notification_stmt->bind_param('is', $id_client, $notification_message,0);
+                $notification_stmt->bind_param('is', $id_client, $notification_message);
                 $notification_stmt->execute();
                 $notification_stmt->close();
 

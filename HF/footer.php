@@ -14,14 +14,14 @@
           <h4 class="footer-title">Quick Links</h4>
           <nav class="footer-nav">
             <a class="footer-nav-link" href="#">About</a>
-            <a class="footer-nav-link" href="#">Contact</a>
-            <a class="footer-nav-link" href="#">Privacy Policy</a>
+            <a class="footer-nav-link" href="#">reglement</a>
+            <a class="footer-nav-link" href="/index.php">Bibliotheque</a>
           </nav>
         </div>
         <div class="footer-section">
           <h4 class="footer-title">Resources</h4>
           <nav class="footer-nav">
-            <a class="footer-nav-link" href="#">Catalog</a>
+            <a class="footer-nav-link" href="/index.php">Catalog</a>
             <a class="footer-nav-link" href="#">Events</a>
             <a class="footer-nav-link" href="#">Services</a>
           </nav>
@@ -29,7 +29,8 @@
       </div>
       <div class="footer-contact">
         <h4 class="footer-title">Contact</h4>
-        <p class="footer-text">123 Main Street, Anytown USA<br>Phone: (123) 456-7890</p>
+        <p class="footer-text">Hay Tighnari, Route nationale N11 de Casablanca commune de Fkih Ben Salah, Boite Postale 336<br>Phone: 05 23 43 49 99<br> site:estfbs.usms.ac.ma</p>
+         
       </div>
     </div>
   </footer>
