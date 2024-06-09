@@ -108,32 +108,17 @@ if (isset($_SESSION['user_id'])) {
                     <div class="mb-4 relative">
                         <label for="oldPassword" class="block mb-2 font-semibold">Old Password</label>
                         <input type="password" id="oldPassword" name="oldPassword" class="w-full px-4 py-2 border rounded-lg" placeholder="Enter your old password">
-                        <button type="button" onclick="togglePasswordVisibility('oldPassword')" class="absolute inset-y-0 right-0 px-3 py-2 bg-transparent text-gray-500 focus:outline-none">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="margin-top: 20px;">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.879 8.121a4 4 0 10-5.658 5.658 4 4 0 005.658-5.658z" />
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.293 19.707a8 8 0 1011.414-11.414L4.293 19.707z" />
-                            </svg>
-                        </button>
+
                     </div>
                     <div class="mb-4 relative">
                         <label for="password" class="block mb-2 font-semibold">New Password</label>
                         <input type="password" id="password" name="password" class="w-full px-4 py-2 border rounded-lg" placeholder="Enter your new password">
-                        <button type="button" onclick="togglePasswordVisibility('password')" class="absolute inset-y-0 right-0 px-3 py-2 bg-transparent text-gray-500 focus:outline-none">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="margin-top: 20px;">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.879 8.121a4 4 0 10-5.658 5.658 4 4 0 005.658-5.658z" />
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.293 19.707a8 8 0 1011.414-11.414L4.293 19.707z" />
-                            </svg>
-                        </button>
+
                     </div>
                     <div class="mb-4 relative">
                         <label for="confirmPassword" class="block mb-2 font-semibold">Confirm New Password</label>
                         <input type="password" id="confirmPassword" name="confirmPassword" class="w-full px-4 py-2 border rounded-lg" placeholder="Confirm your new password">
-                        <button type="button" onclick="togglePasswordVisibility('confirmPassword')" class="absolute inset-y-0 right-0 px-3 py-2 bg-transparent text-gray-500 focus:outline-none">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="margin-top: 20px;">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.879 8.121a4 4 0 10-5.658 5.658 4 4 0 005.658-5.658z" />
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.293 19.707a8 8 0 1011.414-11.414L4.293 19.707z" />
-                            </svg>
-                        </button>
+
                     </div>
                     <div class="text-center">
                         <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Update</button>
@@ -143,25 +128,7 @@ if (isset($_SESSION['user_id'])) {
         </div>
     </div>
 
-    <script>
-        function togglePasswordVisibility(inputId) {
-            const passwordInput = document.getElementById(inputId);
-            if (passwordInput.type === "password") {
-                passwordInput.type = "text";
-            } else {
-                passwordInput.type = "password";
-            }
-        }
 
-        document.getElementById("mobile-menu-toggle").addEventListener("click", function() {
-            var mobileMenu = document.getElementById("mobile-menu");
-            if (mobileMenu.classList.contains("hidden")) {
-                mobileMenu.classList.remove("hidden");
-            } else {
-                mobileMenu.classList.add("hidden");
-            }
-        });
-    </script>
 </body>
 
 </html>
