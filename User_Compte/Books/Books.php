@@ -216,6 +216,22 @@ $result_confirmed = $stmt_confirmed->get_result();
                     <tbody>
                         <!-- Fetch and display confirmed borrowings dynamically -->
                         <?php while ($row = $result_confirmed->fetch_assoc()) : ?>
+                            <?php
+// Assuming $row['date_retour'] contains the date in a standard format (e.g., 'Y-m-d')
+
+$dateRetour = new DateTime($row['date_retour']);
+$today = new DateTime(); // Default is today's date
+
+if ($today >= $dateRetour) {
+    $notification_message = "veuiller retourner le livre";
+    $notification_sql = "INSERT INTO notifications (user_id, message, Status) VALUES (?, ?, 0)";
+    $notification_stmt = $conn->prepare($notification_sql);
+    $notification_stmt->bind_param('is', $user_id, $notification_message);
+    $notification_stmt->execute();
+    $notification_stmt->close();
+
+}
+?>
                             <?php $book_info = getBookInfo($row['numero_livre_emprunter']); ?>
                             <?php $hasReviewed = hasReviewedBook($user_id, $book_info['Numero']); ?>
                             <tr class="border-b border-gray-200">
